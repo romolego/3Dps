@@ -1,0 +1,957 @@
+==================================================
+3Dps Server
+==================================================
+Time:         2026-03-02 10:03:07.361268
+Python:       3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]
+Working dir:  D:\projects\3Dps\backend
+PID:          20252
+Service mode: True
+==================================================
+
+  Open in browser: http://127.0.0.1:8000
+
+INFO:     Will watch for changes in these directories: ['D:\\projects\\3Dps\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [20252] using StatReload
+INFO:     Started server process [4964]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63451 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/app-settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/thumbs/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84/thumbs/45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/markers?generation_id=e74b76e0ce37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/eff81a84/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/frames/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63454 - "GET /api/projects/eff81a84/frames/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/thumbs/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84/thumbs/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63455 - "GET /api/projects/eff81a84/thumbs/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63456 - "GET /api/projects/eff81a84/thumbs/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /api/projects/eff81a84/thumbs/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63458 - "GET /api/projects/eff81a84/thumbs/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/thumbs/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84/thumbs/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63455 - "GET /api/projects/eff81a84/thumbs/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63456 - "GET /api/projects/eff81a84/thumbs/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /api/projects/eff81a84/thumbs/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63458 - "GET /api/projects/eff81a84/thumbs/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84/thumbs/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/thumbs/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63455 - "GET /api/projects/eff81a84/thumbs/32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /api/projects/eff81a84/thumbs/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63456 - "GET /api/projects/eff81a84/thumbs/34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63458 - "GET /api/projects/eff81a84/thumbs/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63452 - "GET /api/projects/eff81a84/thumbs/38 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/thumbs/40 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63456 - "GET /api/projects/eff81a84/thumbs/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63455 - "GET /api/projects/eff81a84/thumbs/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /api/projects/eff81a84/frames/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63453 - "GET /api/projects/eff81a84/frames/23 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63459 - "POST /api/projects/eff81a84/export_advanced HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /project/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/markers?generation_id=e74b76e0ce37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/eff81a84/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63582 - "GET /api/projects/eff81a84/frames/31 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/38 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/35 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/40 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/41 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/39 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/43 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/41 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/43 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63584 - "GET /api/projects/eff81a84/thumbs/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/31 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/thumbs/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/35 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/eff81a84/frames/39 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "POST /api/upload HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/5: Not Found
+INFO:     127.0.0.1:63586 - "GET /api/projects/ea8f8f0a/frames/5 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63584 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/6: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/6 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/7: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/7 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/8: Not Found
+INFO:     127.0.0.1:63587 - "GET /api/projects/ea8f8f0a/frames/8 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/10: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/10 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/11: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/11 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/12: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/12 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/13: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/13 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/14: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/14 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63591 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13767&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/preview_frame?time_ms=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63587 - "GET /api/projects/ea8f8f0a/preview_frame?time_ms=27533 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13767&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63589 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=0&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63588 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=500&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63590 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1000&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "POST /api/projects/ea8f8f0a/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63591 - "GET /api/projects/ea8f8f0a/quality_preview_image?time_ms=13767&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63587 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/18: Not Found
+INFO:     127.0.0.1:63589 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/quality_preview_image?time_ms=13767&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/20: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/20 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/21: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/22: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/22 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/23: Not Found
+INFO:     127.0.0.1:63587 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/24: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/24 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/25: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/26: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/27: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/28: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/29: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/30: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/31: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/32: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/33: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/34: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/35: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/36: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/37: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/38: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/39: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/40: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/41: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/42: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/42 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/43: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/43 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/44: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/45: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/45 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/0: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/0 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/1: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/1 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/2: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/2 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/3: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/3 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/4: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/4 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/5: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/5 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/7: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/7 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/9: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/9 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/15: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/15 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/16: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/16 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/17: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/17 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/18: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/19: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/19 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/23: Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63592 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63592 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13767&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63594 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13767&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63593 - "POST /api/projects/ea8f8f0a/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63593 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/21: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/22: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/22 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/23: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/24: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/24 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/25: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/26: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/27: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/28: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/29: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/30: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/31: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/32: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/33: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/34: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/36: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/37: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/38: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/39: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/41: Not Found
+INFO:     127.0.0.1:63594 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/42: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/42 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/43: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/43 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/44: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/45: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/45 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/0: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/0 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/1: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/1 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/2: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/2 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/3: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/3 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/7: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/7 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/35: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/40: Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63593 - "GET /api/projects/ea8f8f0a/preview_frame?time_ms=1394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63594 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1400&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63597 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=14464&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=14464&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63599 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63600 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13604&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63601 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13604&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63597 - "GET /api/projects/ea8f8f0a/preview_frame?time_ms=1394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/preview_frame?time_ms=25813 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63599 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1900&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63600 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=2400&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/quality_preview_image?time_ms=13604&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63594 - "GET /api/projects/ea8f8f0a/quality_preview_image?time_ms=13604&user_quality=70&max_width=260 HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/23: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/25: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/26: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/27: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/28: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/29: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/30: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/31: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/32: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/33: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/34: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/35: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/36: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/37: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63597 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1500&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1700&max_width=240 HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/8: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/8 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/22: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/22 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63597 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=2000&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=2500&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1600&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/get_preview_frame?time_ms=1800&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63610 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13604&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "POST /api/projects/ea8f8f0a/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+[backend] /generate: request {"pid": "ea8f8f0a", "start": 1.3944682048396175, "end": 25.813155880697806, "num_frames": 131, "user_quality": 100}
+[backend] /generate: starting background task {"pid": "ea8f8f0a", "start": 1.3944682048396175, "end": 25.813155880697806, "num_frames": 131, "user_quality": 100, "ffmpeg_qscale": 1, "settings_hash": "4a2aea969be5c528", "frame_selection_mode": "time", "custom_timestamps_count": 0}
+INFO:     127.0.0.1:63595 - "POST /api/projects/ea8f8f0a/generate HTTP/1.1" 200 OK
+[backend] _generate_task: start pid=ea8f8f0a generation_id=2b3825ebb005 start=1.3944682048396175 end=25.813155880697806 num_frames=131 user_quality=100 mode=time
+[backend] _generate_task: video path = D:\projects\3Dps\projects\ea8f8f0a\original_document_5267411998496299615.mp4
+[backend] _generate_task: temp dirs frames=D:\projects\3Dps\projects\ea8f8f0a\_frames_gen_2b3825ebb005 thumbs=D:\projects\3Dps\projects\ea8f8f0a\_thumbs_gen_2b3825ebb005
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] _generate_task: probed video duration = 27.533333
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/24: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/24 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/25: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/26: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/27: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/28: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/29: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/30: Not Found
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/31: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/32: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/33: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/34: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/35: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/36: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/37: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/38: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/39: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/40: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/41: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/42: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/42 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/43: Not Found
+INFO:     127.0.0.1:63604 - "GET /api/projects/ea8f8f0a/frames/43 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/45: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/45 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/0: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/0 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/1: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/1 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/2: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/2 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/3: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/3 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/6: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/6 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/18: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/19: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/19 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/44: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/39: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/40: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/41: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/16: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/16 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/21: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/34: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/37: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/38: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/9: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/9 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/17: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/17 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/18: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 404 Not Found
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/20: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/20 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/31: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/17: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/17 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/frames/30: Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+[backend] _generate_task: all 131 frames generated, performing atomic swap
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "GET /api/projects/ea8f8f0a/thumbs/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "GET /api/projects/ea8f8f0a/thumbs/130 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/thumbs/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "GET /api/projects/ea8f8f0a/thumbs/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "GET /api/projects/ea8f8f0a/thumbs/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63625 - "GET /api/projects/ea8f8f0a/thumbs/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63626 - "GET /api/projects/ea8f8f0a/thumbs/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63627 - "GET /api/projects/ea8f8f0a/thumbs/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "GET /api/projects/ea8f8f0a/thumbs/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/thumbs/48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "GET /api/projects/ea8f8f0a/thumbs/54 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63626 - "GET /api/projects/ea8f8f0a/thumbs/60 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63627 - "GET /api/projects/ea8f8f0a/thumbs/66 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63625 - "GET /api/projects/ea8f8f0a/thumbs/72 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "GET /api/projects/ea8f8f0a/thumbs/78 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/thumbs/84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "GET /api/projects/ea8f8f0a/thumbs/90 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63627 - "GET /api/projects/ea8f8f0a/thumbs/96 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63626 - "GET /api/projects/ea8f8f0a/thumbs/108 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63625 - "GET /api/projects/ea8f8f0a/thumbs/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63624 - "GET /api/projects/ea8f8f0a/thumbs/114 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63595 - "GET /api/projects/ea8f8f0a/thumbs/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "GET /api/projects/ea8f8f0a/thumbs/126 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/47 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/49 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63632 - "GET /api/projects/ea8f8f0a/frames/52 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63638 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63638 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63638 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63638 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63640 - "PATCH /api/projects/ea8f8f0a/metadata HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/53 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/54 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/56 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/57 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/58 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/59 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/60 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/61 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/62 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/63 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/64 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/65 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/66 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/67 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/68 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/69 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/70 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/71 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/72 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/73 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/74 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/75 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/76 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/77 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/78 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/79 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/80 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/81 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/82 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/83 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/85 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/86 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/87 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/88 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/89 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/90 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/91 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/92 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/93 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/94 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/95 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/96 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/97 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/98 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/99 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/104 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/105 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/106 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/107 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/108 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/109 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/110 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/111 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/112 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/113 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/114 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/115 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/114 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/103 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63639 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63641 - "GET /api/projects/ea8f8f0a/frames/100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63642 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63642 - "GET /api/projects/ea8f8f0a/frames/116 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63647 - "GET /api/projects/ea8f8f0a/frames/127 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /api/projects/ea8f8f0a/frames/129 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /api/projects/ea8f8f0a/frames/130 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /api/projects/ea8f8f0a/frames/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /api/projects/ea8f8f0a/frames/127 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /api/projects/ea8f8f0a/frames/126 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63650 - "GET /api/projects/ea8f8f0a/frames/123 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63651 - "GET /api/projects/ea8f8f0a/frames/122 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63652 - "GET /api/projects/ea8f8f0a/frames/121 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63653 - "GET /api/projects/ea8f8f0a/frames/119 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63653 - "GET /api/projects/ea8f8f0a/frames/118 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63656 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63657 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63658 - "GET /api/projects/ea8f8f0a/frames/117 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63659 - "GET /api/projects/ea8f8f0a/frames/118 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63660 - "GET /api/projects/ea8f8f0a/frames/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63661 - "GET /api/projects/ea8f8f0a/frames/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63661 - "GET /api/projects/ea8f8f0a/frames/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63661 - "GET /api/projects/ea8f8f0a/frames/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63661 - "GET /api/projects/ea8f8f0a/frames/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/128 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/127 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/124 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/122 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/116 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/121 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/122 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63663 - "GET /api/projects/ea8f8f0a/frames/121 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63664 - "GET /api/projects/ea8f8f0a/frames/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63665 - "GET /api/projects/ea8f8f0a/frames/117 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63666 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/projects/ea8f8f0a/frames/101 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/projects/ea8f8f0a/frames/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63667 - "GET /api/projects/ea8f8f0a/frames/123 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63669 - "GET /api/projects/ea8f8f0a/frames/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63669 - "GET /api/projects/ea8f8f0a/frames/128 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63670 - "GET /api/projects/ea8f8f0a/frames/123 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/124 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/126 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/128 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/127 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/125 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/123 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/121 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/118 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/117 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/124 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63671 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63674 - "POST /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63674 - "GET /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63675 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/43 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/47 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/49 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63681 - "GET /api/projects/ea8f8f0a/frames/51 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63682 - "GET /api/projects/ea8f8f0a/frames/55 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63682 - "GET /api/projects/ea8f8f0a/frames/51 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63682 - "GET /api/projects/ea8f8f0a/frames/48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63689 - "POST /api/projects/ea8f8f0a/export_advanced HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63708 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63709 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63709 - "GET /api/projects/ea8f8f0a/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63709 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13604&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "POST /api/projects/ea8f8f0a/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/ea8f8f0a/quality_preview_frame?time_ms=13604&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "POST /api/project/ea8f8f0a/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "GET /api/projects/eff81a84/markers?generation_id=e74b76e0ce37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/thumbs/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/projects/eff81a84/thumbs/45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/eff81a84/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/thumbs/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "GET /api/projects/eff81a84/thumbs/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/projects/eff81a84/thumbs/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63714 - "GET /api/projects/eff81a84/thumbs/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63715 - "GET /api/projects/eff81a84/thumbs/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63716 - "GET /api/projects/eff81a84/thumbs/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "GET /api/projects/eff81a84/thumbs/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/thumbs/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63714 - "GET /api/projects/eff81a84/thumbs/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63716 - "GET /api/projects/eff81a84/thumbs/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/projects/eff81a84/thumbs/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63715 - "GET /api/projects/eff81a84/thumbs/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/thumbs/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "GET /api/projects/eff81a84/thumbs/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63714 - "GET /api/projects/eff81a84/thumbs/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/projects/eff81a84/thumbs/32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63715 - "GET /api/projects/eff81a84/thumbs/34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/thumbs/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63716 - "GET /api/projects/eff81a84/thumbs/38 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63710 - "GET /api/projects/eff81a84/thumbs/40 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63711 - "GET /api/projects/eff81a84/thumbs/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63714 - "GET /api/projects/eff81a84/thumbs/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63715 - "GET /api/projects/eff81a84/frames/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/projects/eff81a84/frames/23 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63719 - "GET /api/projects/eff81a84/frames/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63719 - "GET /api/projects/eff81a84/frames/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63721 - "POST /api/projects/eff81a84/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63721 - "GET /api/projects/eff81a84/markers?generation_id=e74b76e0ce37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63721 - "GET /api/projects/eff81a84/frames/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63721 - "GET /api/projects/eff81a84/frames/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63721 - "GET /api/projects/eff81a84/frames/25 HTTP/1.1" 200 OK
+[backend] analyze_changes: computing scores for pid=eff81a84 start=0.0 end=23.166 fps=29.914
+[backend] analyze_changes: computed 694 frame scores
+INFO:     127.0.0.1:63745 - "POST /api/projects/eff81a84/analyze_changes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63749 - "POST /api/projects/eff81a84/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63750 - "GET /api/projects/eff81a84/quality_preview_frame?time_ms=11583&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63757 - "GET /api/projects/eff81a84/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63758 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63759 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63759 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/app-settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63759 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/markers?generation_id=e74b76e0ce37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/eff81a84/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/frames/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/frames/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/frames/24 HTTP/1.1" 200 OK
+[backend] analyze_changes: using cached scores for eff81a84_0.000_23.166, 694 frames
+INFO:     127.0.0.1:63759 - "POST /api/projects/eff81a84/analyze_changes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63764 - "GET /api/projects/eff81a84/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63759 - "GET /api/projects/eff81a84/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63759 - "GET /api/projects/eff81a84/video HTTP/1.1" 206 Partial Content
+INFO:     127.0.0.1:63766 - "GET /api/projects/eff81a84/get_preview_frame?time_ms=0&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "GET /api/projects/eff81a84/quality_preview_frame?time_ms=11583&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/eff81a84/preview_frame?time_ms=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/eff81a84/get_preview_frame?time_ms=2600&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/eff81a84/preview_frame?time_ms=23166 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63767 - "GET /api/projects/eff81a84/get_preview_frame?time_ms=1700&max_width=240 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "POST /api/projects/eff81a84/estimate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "POST /api/project/eff81a84/save HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "GET /api/projects/eff81a84/quality_preview_frame?time_ms=11583&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/eff81a84/quality_preview_image?time_ms=11583&user_quality=100&max_width=260 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/thumbs/0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/ea8f8f0a/thumbs/130 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/roi HTTP/1.1" 200 OK
+[backend] HTTPException 404 at http://127.0.0.1:8000/api/projects/ea8f8f0a/centered_frames: Centered frames not generated
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/centered_frames HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/thumbs/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/ea8f8f0a/thumbs/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63766 - "GET /api/projects/ea8f8f0a/thumbs/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/ea8f8f0a/thumbs/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "GET /api/projects/ea8f8f0a/thumbs/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63767 - "GET /api/projects/ea8f8f0a/thumbs/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/thumbs/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/ea8f8f0a/thumbs/60 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/ea8f8f0a/thumbs/66 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63767 - "GET /api/projects/ea8f8f0a/thumbs/54 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63766 - "GET /api/projects/ea8f8f0a/thumbs/72 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "GET /api/projects/ea8f8f0a/thumbs/48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/ea8f8f0a/thumbs/78 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/thumbs/84 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63766 - "GET /api/projects/ea8f8f0a/thumbs/90 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63771 - "GET /api/projects/ea8f8f0a/thumbs/96 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63767 - "GET /api/projects/ea8f8f0a/thumbs/102 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/ea8f8f0a/thumbs/108 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63770 - "GET /api/projects/ea8f8f0a/thumbs/114 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/thumbs/120 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63768 - "GET /api/projects/ea8f8f0a/thumbs/126 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/6 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/8 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63769 - "GET /api/projects/ea8f8f0a/frames/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63772 - "GET /api/projects/ea8f8f0a/frames/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63772 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/23 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/30 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/31 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/32 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/33 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/34 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/35 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/36 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/37 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/38 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/39 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/40 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/41 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/42 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63781 - "GET /api/projects/ea8f8f0a/frames/45 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63782 - "POST /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63782 - "GET /api/projects/ea8f8f0a/marker_types HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "POST /api/projects/ea8f8f0a/markers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63783 - "GET /api/projects/ea8f8f0a/markers?generation_id=2b3825ebb005 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63812 - "GET /api/projects/ea8f8f0a/frames/44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63812 - "GET /api/projects/ea8f8f0a/frames/46 HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4964]
+INFO:     Stopping reloader process [20252]
