@@ -1364,6 +1364,11 @@ def _generate_task(
     }
     (pdir / "index.json").write_text(json.dumps(index_data, indent=2), encoding="utf-8")
 
+    # Clear all marker and zone instances on regeneration (new frame set = clean annotations).
+    # Future: could add "regeneration history" (archive frames with annotations by iteration, optional manual transfer).
+    _save_markers(pdir, [])
+    _save_zones(pdir, [])
+
     # Save last_generated_settings so the frontend can detect draft changes
     last_generated_settings = {
         "start": start,
@@ -2098,10 +2103,26 @@ async def list_markers(pid: str, generation_id: str = None):
     return {"markers": markers}
 
 
+def _get_default_marker_type_color(pdir: Path) -> str:
+    """Return default marker type color for new default markers."""
+    data = _load_marker_types_data(pdir)
+    return data.get("default", {}).get("color", "#3fb950")
+
+
 @app.post("/api/projects/{pid}/markers")
 async def create_marker(pid: str, request: Request):
     pdir = _safe_project_dir(pid)
     body = await request.json()
+    type_id = body.get("type_id", "")
+    type_title = body.get("type_title", "")
+    type_color = body.get("type_color", "")
+    # Для дефолтного типа: если type_color не передан, берём из настроек типа
+    if (not type_id or type_id == DEFAULT_MARKER_TYPE_ID) and not type_color:
+        type_color = _get_default_marker_type_color(pdir)
+        if not type_id:
+            type_id = DEFAULT_MARKER_TYPE_ID
+        if not type_title:
+            type_title = "Метки"
     marker = {
         "id": uuid.uuid4().hex[:12],
         "frame_index": int(body["frame_index"]),
@@ -2112,12 +2133,14 @@ async def create_marker(pid: str, request: Request):
         "text": body.get("text", ""),
         "display_mode": body.get("display_mode", "inherit"),
         "pin_show_text_always": bool(body.get("pin_show_text_always", False)),
-        "type_id": body.get("type_id", ""),
-        "type_title": body.get("type_title", ""),
-        "type_color": body.get("type_color", ""),
+        "type_id": type_id,
+        "type_title": type_title,
+        "type_color": type_color,
         "title": body.get("title", ""),  # Заголовок для пометок по умолчанию
         "created": datetime.now().isoformat(),
     }
+    if "color" in body and body["color"]:
+        marker["color"] = body["color"]
     markers = _load_markers(pdir)
     markers.append(marker)
     _save_markers(pdir, markers)
@@ -2143,6 +2166,11 @@ async def update_marker(pid: str, mid: str, request: Request):
                 m["display_mode"] = body["display_mode"]
             if "pin_show_text_always" in body:
                 m["pin_show_text_always"] = bool(body["pin_show_text_always"])
+            if "color" in body:
+                if body["color"]:
+                    m["color"] = body["color"]
+                elif "color" in m:
+                    del m["color"]
             _save_markers(pdir, markers)
             return m
     raise HTTPException(404, "Marker not found")
@@ -2159,29 +2187,62 @@ async def delete_marker(pid: str, mid: str):
 
 # ─── Marker Types (per-project) ──────────────────────────────────────────
 
-def _load_marker_types(pdir: Path) -> list:
+DEFAULT_MARKER_TYPE_ID = "__default__"
+
+def _load_marker_types_data(pdir: Path) -> dict:
+    """Load marker_types.json. Returns { "default": {...}, "marker_types": [...] }."""
     fp = pdir / "marker_types.json"
     if not fp.exists():
-        return []
+        return {"default": {}, "marker_types": []}
     try:
         data = json.loads(fp.read_text(encoding="utf-8"))
-        return data.get("marker_types", [])
+        # Legacy: file may be just a list
+        if isinstance(data, list):
+            return {"default": {}, "marker_types": data}
+        return {
+            "default": data.get("default", {}),
+            "marker_types": data.get("marker_types", []),
+        }
     except Exception:
-        return []
+        return {"default": {}, "marker_types": []}
 
 
-def _save_marker_types(pdir: Path, types: list):
+def _save_marker_types_data(pdir: Path, data: dict):
+    out = {"marker_types": data["marker_types"]}
+    if data.get("default"):
+        out["default"] = data["default"]
     (pdir / "marker_types.json").write_text(
-        json.dumps({"marker_types": types}, indent=2, ensure_ascii=False),
+        json.dumps(out, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
+
+
+def _normalize_marker_type(t: dict) -> dict:
+    t = dict(t)
+    if "show_editor_on_create" not in t:
+        t["show_editor_on_create"] = True
+    return t
+
+
+def _default_marker_type_obj(default_settings: dict) -> dict:
+    return {
+        "id": DEFAULT_MARKER_TYPE_ID,
+        "title": "Метки",
+        "color": default_settings.get("color", "#3fb950"),
+        "require_comment": False,
+        "show_editor_on_create": default_settings.get("show_editor_on_create", True),
+        "allow_instance_color": bool(default_settings.get("allow_instance_color", False)),
+        "use_default_point_on_dblclick": default_settings.get("use_default_point_on_dblclick", True),
+    }
 
 
 @app.get("/api/projects/{pid}/marker_types")
 async def list_marker_types(pid: str):
     pdir = _safe_project_dir(pid)
-    types = _load_marker_types(pdir)
-    return {"marker_types": types}
+    data = _load_marker_types_data(pdir)
+    default_obj = _default_marker_type_obj(data["default"])
+    custom = [_normalize_marker_type(t) for t in data["marker_types"]]
+    return {"marker_types": [default_obj] + custom}
 
 
 @app.post("/api/projects/{pid}/marker_types")
@@ -2193,12 +2254,13 @@ async def create_marker_type(pid: str, request: Request):
         "title": body.get("title", "").strip(),
         "color": body.get("color", "#3fb950"),
         "require_comment": bool(body.get("require_comment", False)),
+        "show_editor_on_create": bool(body.get("show_editor_on_create", True)),
     }
     if not mt["title"]:
         raise HTTPException(400, "Title is required")
-    types = _load_marker_types(pdir)
-    types.append(mt)
-    _save_marker_types(pdir, types)
+    data = _load_marker_types_data(pdir)
+    data["marker_types"].append(mt)
+    _save_marker_types_data(pdir, data)
     return mt
 
 
@@ -2206,8 +2268,22 @@ async def create_marker_type(pid: str, request: Request):
 async def update_marker_type(pid: str, tid: str, request: Request):
     pdir = _safe_project_dir(pid)
     body = await request.json()
-    types = _load_marker_types(pdir)
-    for t in types:
+    if tid == DEFAULT_MARKER_TYPE_ID:
+        data = _load_marker_types_data(pdir)
+        default_data = data.get("default", {})
+        if "show_editor_on_create" in body:
+            default_data = {**default_data, "show_editor_on_create": bool(body["show_editor_on_create"])}
+        if "color" in body:
+            default_data = {**default_data, "color": body["color"]}
+        if "allow_instance_color" in body:
+            default_data = {**default_data, "allow_instance_color": bool(body["allow_instance_color"])}
+        if "use_default_point_on_dblclick" in body:
+            default_data = {**default_data, "use_default_point_on_dblclick": bool(body["use_default_point_on_dblclick"])}
+        data["default"] = default_data
+        _save_marker_types_data(pdir, data)
+        return _default_marker_type_obj(data["default"])
+    data = _load_marker_types_data(pdir)
+    for t in data["marker_types"]:
         if t["id"] == tid:
             if "title" in body:
                 t["title"] = body["title"].strip()
@@ -2215,17 +2291,254 @@ async def update_marker_type(pid: str, tid: str, request: Request):
                 t["color"] = body["color"]
             if "require_comment" in body:
                 t["require_comment"] = bool(body["require_comment"])
-            _save_marker_types(pdir, types)
-            return t
+            if "show_editor_on_create" in body:
+                t["show_editor_on_create"] = bool(body["show_editor_on_create"])
+            _save_marker_types_data(pdir, data)
+            return _normalize_marker_type(t)
     raise HTTPException(404, "Marker type not found")
 
 
 @app.delete("/api/projects/{pid}/marker_types/{tid}")
 async def delete_marker_type(pid: str, tid: str):
+    if tid == DEFAULT_MARKER_TYPE_ID:
+        raise HTTPException(403, "Cannot delete default marker type")
     pdir = _safe_project_dir(pid)
-    types = _load_marker_types(pdir)
-    types = [t for t in types if t["id"] != tid]
-    _save_marker_types(pdir, types)
+    data = _load_marker_types_data(pdir)
+    data["marker_types"] = [t for t in data["marker_types"] if t["id"] != tid]
+    _save_marker_types_data(pdir, data)
+    return {"status": "deleted"}
+
+
+# ─── Zone Markers (rectangular annotations) ──────────────────────────────
+
+def _load_zones(pdir: Path) -> list:
+    fp = pdir / "zones.json"
+    if not fp.exists():
+        return []
+    try:
+        data = json.loads(fp.read_text(encoding="utf-8"))
+        return data.get("zones", [])
+    except Exception:
+        return []
+
+
+def _save_zones(pdir: Path, zones: list):
+    (pdir / "zones.json").write_text(
+        json.dumps({"zones": zones}, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
+@app.get("/api/projects/{pid}/zones")
+async def list_zones(pid: str):
+    pdir = _safe_project_dir(pid)
+    zones = _load_zones(pdir)
+    return {"zones": zones}
+
+
+@app.post("/api/projects/{pid}/zones")
+async def create_zone(pid: str, request: Request):
+    pdir = _safe_project_dir(pid)
+    body = await request.json()
+    type_id = body.get("type_id", "")
+    type_title = body.get("type_title", "")
+    type_color = body.get("type_color", "")
+    if (not type_id or type_id == DEFAULT_ZONE_TYPE_ID) and not type_color:
+        type_color = _get_default_zone_type_color(pdir)
+        if not type_id:
+            type_id = DEFAULT_ZONE_TYPE_ID
+        if not type_title:
+            type_title = "Зоны"
+    zone = {
+        "id": uuid.uuid4().hex[:12],
+        "frame_index": int(body["frame_index"]),
+        "generation_id": body.get("generation_id", ""),
+        "view_mode": body.get("view_mode", "original"),
+        "x": float(body["x"]),
+        "y": float(body["y"]),
+        "w": float(body["w"]),
+        "h": float(body["h"]),
+        "text": body.get("text", ""),
+        "display_mode": body.get("display_mode", "inherit"),
+        "pin_show_text_always": bool(body.get("pin_show_text_always", False)),
+        "type_id": type_id,
+        "type_title": type_title,
+        "type_color": type_color,
+        "title": body.get("title", ""),
+        "created": datetime.now().isoformat(),
+    }
+    if "color" in body and body["color"]:
+        zone["color"] = body["color"]
+    zones = _load_zones(pdir)
+    zones.append(zone)
+    _save_zones(pdir, zones)
+    return zone
+
+
+@app.put("/api/projects/{pid}/zones/{zid}")
+async def update_zone(pid: str, zid: str, request: Request):
+    pdir = _safe_project_dir(pid)
+    body = await request.json()
+    zones = _load_zones(pdir)
+    for z in zones:
+        if z["id"] == zid:
+            if "text" in body:
+                z["text"] = body["text"]
+            if "title" in body:
+                z["title"] = body["title"]
+            if "x" in body:
+                z["x"] = float(body["x"])
+            if "y" in body:
+                z["y"] = float(body["y"])
+            if "w" in body:
+                z["w"] = float(body["w"])
+            if "h" in body:
+                z["h"] = float(body["h"])
+            if "display_mode" in body:
+                z["display_mode"] = body["display_mode"]
+            if "pin_show_text_always" in body:
+                z["pin_show_text_always"] = bool(body["pin_show_text_always"])
+            if "color" in body:
+                if body["color"]:
+                    z["color"] = body["color"]
+                elif "color" in z:
+                    del z["color"]
+            _save_zones(pdir, zones)
+            return z
+    raise HTTPException(404, "Zone not found")
+
+
+@app.delete("/api/projects/{pid}/zones/{zid}")
+async def delete_zone(pid: str, zid: str):
+    pdir = _safe_project_dir(pid)
+    zones = _load_zones(pdir)
+    zones = [z for z in zones if z["id"] != zid]
+    _save_zones(pdir, zones)
+    return {"status": "deleted"}
+
+
+# ─── Zone Types (per-project) ────────────────────────────────────────────
+
+DEFAULT_ZONE_TYPE_ID = "__default__"
+
+def _load_zone_types_data(pdir: Path) -> dict:
+    fp = pdir / "zone_types.json"
+    if not fp.exists():
+        return {"default": {}, "zone_types": []}
+    try:
+        data = json.loads(fp.read_text(encoding="utf-8"))
+        if isinstance(data, list):
+            return {"default": {}, "zone_types": data}
+        return {
+            "default": data.get("default", {}),
+            "zone_types": data.get("zone_types", []),
+        }
+    except Exception:
+        return {"default": {}, "zone_types": []}
+
+
+def _save_zone_types_data(pdir: Path, data: dict):
+    out = {"zone_types": data["zone_types"]}
+    if data.get("default"):
+        out["default"] = data["default"]
+    (pdir / "zone_types.json").write_text(
+        json.dumps(out, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+
+def _normalize_zone_type(t: dict) -> dict:
+    t = dict(t)
+    if "show_editor_on_create" not in t:
+        t["show_editor_on_create"] = True
+    return t
+
+
+def _default_zone_type_obj(default_settings: dict) -> dict:
+    return {
+        "id": DEFAULT_ZONE_TYPE_ID,
+        "title": "Зоны",
+        "color": default_settings.get("color", "#3fb950"),
+        "require_comment": False,
+        "show_editor_on_create": default_settings.get("show_editor_on_create", True),
+        "allow_instance_color": bool(default_settings.get("allow_instance_color", False)),
+    }
+
+
+def _get_default_zone_type_color(pdir: Path) -> str:
+    """Return default zone type color for new default zones."""
+    data = _load_zone_types_data(pdir)
+    return data.get("default", {}).get("color", "#3fb950")
+
+
+@app.get("/api/projects/{pid}/zone_types")
+async def list_zone_types(pid: str):
+    pdir = _safe_project_dir(pid)
+    data = _load_zone_types_data(pdir)
+    default_obj = _default_zone_type_obj(data["default"])
+    custom = [_normalize_zone_type(t) for t in data["zone_types"]]
+    return {"zone_types": [default_obj] + custom}
+
+
+@app.post("/api/projects/{pid}/zone_types")
+async def create_zone_type(pid: str, request: Request):
+    pdir = _safe_project_dir(pid)
+    body = await request.json()
+    zt = {
+        "id": uuid.uuid4().hex[:12],
+        "title": body.get("title", "").strip(),
+        "color": body.get("color", "#3fb950"),
+        "require_comment": bool(body.get("require_comment", False)),
+        "show_editor_on_create": bool(body.get("show_editor_on_create", True)),
+    }
+    if not zt["title"]:
+        raise HTTPException(400, "Title is required")
+    data = _load_zone_types_data(pdir)
+    data["zone_types"].append(zt)
+    _save_zone_types_data(pdir, data)
+    return zt
+
+
+@app.put("/api/projects/{pid}/zone_types/{tid}")
+async def update_zone_type(pid: str, tid: str, request: Request):
+    pdir = _safe_project_dir(pid)
+    body = await request.json()
+    if tid == DEFAULT_ZONE_TYPE_ID:
+        data = _load_zone_types_data(pdir)
+        default_data = data.get("default", {})
+        if "show_editor_on_create" in body:
+            default_data = {**default_data, "show_editor_on_create": bool(body["show_editor_on_create"])}
+        if "color" in body:
+            default_data = {**default_data, "color": body["color"]}
+        if "allow_instance_color" in body:
+            default_data = {**default_data, "allow_instance_color": bool(body["allow_instance_color"])}
+        data["default"] = default_data
+        _save_zone_types_data(pdir, data)
+        return _default_zone_type_obj(data["default"])
+    data = _load_zone_types_data(pdir)
+    for t in data["zone_types"]:
+        if t["id"] == tid:
+            if "title" in body:
+                t["title"] = body["title"].strip()
+            if "color" in body:
+                t["color"] = body["color"]
+            if "require_comment" in body:
+                t["require_comment"] = bool(body["require_comment"])
+            if "show_editor_on_create" in body:
+                t["show_editor_on_create"] = bool(body["show_editor_on_create"])
+            _save_zone_types_data(pdir, data)
+            return _normalize_zone_type(t)
+    raise HTTPException(404, "Zone type not found")
+
+
+@app.delete("/api/projects/{pid}/zone_types/{tid}")
+async def delete_zone_type(pid: str, tid: str):
+    if tid == DEFAULT_ZONE_TYPE_ID:
+        raise HTTPException(403, "Cannot delete default zone type")
+    pdir = _safe_project_dir(pid)
+    data = _load_zone_types_data(pdir)
+    data["zone_types"] = [t for t in data["zone_types"] if t["id"] != tid]
+    _save_zone_types_data(pdir, data)
     return {"status": "deleted"}
 
 

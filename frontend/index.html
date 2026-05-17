@@ -13,6 +13,7 @@
   --accent:#58a6ff; --accent-hover:#79c0ff;
   --green:#3fb950; --yellow:#d29922; --red:#f85149;
   --radius:8px;
+  --range-track-bg:#5a6578;
 }
 html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.5}
@@ -23,7 +24,51 @@ button:disabled{opacity:.5;cursor:default}
 input[type=text],input[type=number]{
   background:var(--surface2);border:1px solid var(--border);color:var(--text);
   border-radius:var(--radius);padding:6px 10px;font:inherit;width:100%}
-input[type=range]{accent-color:var(--accent)}
+/* Общий стиль ползунков: круглый бегунок, синяя заливка прогресса, нейтральный трек */
+input[type=range]{
+  --range-pct: 0%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 100%;
+}
+input[type=range]::-webkit-slider-runnable-track{
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--range-pct, 0%), var(--range-track-bg) var(--range-pct, 0%));
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  cursor: pointer;
+  margin-top: -6px;
+}
+input[type=range]::-moz-range-track{
+  height: 8px;
+  border-radius: 4px;
+  background: var(--range-track-bg);
+}
+input[type=range]::-moz-range-progress{
+  height: 8px;
+  border-radius: 4px;
+  background: var(--accent);
+}
+input[type=range]::-moz-range-thumb{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  cursor: pointer;
+}
 label{color:var(--muted);font-size:.9em}
 a{color:var(--accent)}
 h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
@@ -776,16 +821,16 @@ h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
    Центральный блок навигации должен быть визуально по центру области предпросмотра.
    Для этого делаем саму панель относительным контейнером на всю ширину,
    а блок .frame-nav позиционируем абсолютно по центру. */
+/* Сетка: main | 1fr | nav | 1fr | кнопка типа меток | 1fr | масштаб — кнопка строго по центру между навигацией и масштабом */
 .viewer-settings-bar{
   position:relative;
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
+  display:grid;
+  grid-template-columns:auto 1fr auto 1fr auto 1fr auto;
+  gap:12px 20px;
   padding:8px 20px 10px 20px;
   background:var(--surface);
   border-top:1px solid var(--border);
   align-items:center;
-  justify-content:space-between;
 }
 .viewer-settings-main{
   display:flex;
@@ -793,6 +838,14 @@ h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
   gap:12px;
   flex-wrap:wrap;
   min-width:220px;
+}
+.viewer-settings-gap{min-width:0}
+.viewer-settings-nav-cell{display:flex;align-items:center;justify-content:center}
+.viewer-settings-right-cell{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 .viewer-settings-main .infinite-loop-group{
   margin-left:18px;
@@ -860,12 +913,8 @@ h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
   align-items:flex-start;
 }
 
-/* панель навигации по кадрам по центру верхней строки */
+/* панель навигации по кадрам (в сетке — между двумя 1fr, визуально по центру между левой и правой группами) */
 .frame-nav{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%, -50%);
   display:flex;
   align-items:center;
   gap:12px;
@@ -972,7 +1021,7 @@ h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
   padding:6px 12px;display:flex;align-items:stretch;gap:0;min-height:0;
 }
 .markers-controls-left{
-  flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;gap:4px;
+  flex:0 0 auto;display:flex;flex-direction:row;align-items:flex-start;gap:12px;
   padding:4px 12px 4px 8px;white-space:nowrap;
 }
 .markers-divider{
@@ -1073,9 +1122,38 @@ h1{font-size:1.8em}h2{font-size:1.3em}h3{font-size:1.1em}
 .marker-confirm-popup .confirm-actions{display:flex;gap:8px;justify-content:center}
 .marker-confirm-popup .confirm-actions button{padding:4px 14px;font-size:.85em}
 
+/* ── Секции управления пометками ── */
+.marker-section-a,
+.marker-section-b,
+.marker-section-c{
+  margin-bottom:0;padding-bottom:6px;border-bottom:none;
+  padding-right:12px;border-right:1px solid var(--border);
+  min-width:170px;
+}
+.marker-section-c{
+  border-right:none;margin-bottom:0;padding-bottom:2px;
+}
+.marker-section-header{
+  font-size:.82em;color:var(--muted);font-weight:600;margin-bottom:4px;
+  display:flex;align-items:center;gap:6px;
+}
+
+/* Иконка помощи с tooltip */
+.marker-help-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--muted);font-size:13px;font-weight:600;
+  cursor:help;transition:.15s;flex-shrink:0;
+  position:relative;
+}
+.marker-help-icon:hover{
+  background:var(--accent);color:#fff;border-color:var(--accent);
+}
+
 /* ── Типы пометок (Marker Types) ── */
 .marker-types-section{
-  margin-top:6px;border-top:1px solid var(--border);padding-top:6px;
+  margin-top:0;border-top:none;padding-top:0;
 }
 .marker-types-header{
   display:flex;align-items:center;gap:6px;margin-bottom:4px;white-space:nowrap;
@@ -1119,6 +1197,88 @@ html.theme-light .marker-type-chip.active{
 }
 .marker-type-chip:hover .chip-gear{opacity:.7}
 .marker-type-chip .chip-gear:hover{opacity:1}
+
+/* ── Секция зон (Zones) ── */
+.marker-zones-section{
+  margin-top:0;
+}
+.marker-zones-placeholder{
+  font-size:.82em;color:var(--muted);font-style:italic;padding:4px 0;
+}
+
+/* ── Zone rectangles on overlay ── */
+.zone-rect{
+  position:absolute;pointer-events:auto;cursor:move;z-index:8;
+  border:2px solid var(--green);background:rgba(63,185,80,.18);
+  box-sizing:border-box;min-width:10px;min-height:10px;
+}
+.zone-rect:hover{border-color:#fff;box-shadow:0 0 8px rgba(63,185,80,.5)}
+.zone-rect.selected{border-color:#fff;box-shadow:0 0 0 2px var(--accent),0 0 12px rgba(88,166,255,.4)}
+.zone-rect.moving{opacity:.85;cursor:grabbing}
+
+/* zone number badge */
+.zone-num{
+  position:absolute;top:-18px;left:0;
+  font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.7);
+  border-radius:8px;padding:1px 5px;white-space:nowrap;pointer-events:none;
+}
+
+/* zone type badge */
+.zone-type-badge{
+  position:absolute;top:-18px;left:24px;
+  font-size:10px;font-weight:600;color:#fff;
+  padding:1px 6px;border-radius:6px;white-space:nowrap;pointer-events:none;
+}
+
+/* zone text badge (always visible) */
+.zone-badge{
+  position:absolute;left:0;bottom:-20px;
+  background:rgba(0,0,0,.82);color:#fff;font-size:11px;line-height:1.3;
+  padding:3px 7px;border-radius:6px;max-width:180px;
+  word-wrap:break-word;white-space:pre-wrap;pointer-events:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:9;
+}
+
+/* zone hover tooltip */
+.zone-hover-tooltip{
+  position:absolute;left:0;bottom:-20px;
+  background:rgba(0,0,0,.85);color:#fff;font-size:11px;line-height:1.3;
+  padding:3px 8px;border-radius:6px;max-width:200px;
+  word-wrap:break-word;white-space:pre-wrap;pointer-events:none;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:9;
+  display:none;
+}
+.zone-rect:hover .zone-hover-tooltip{display:block}
+
+/* resize handles */
+.zone-resize-handle{
+  position:absolute;width:8px;height:8px;background:#fff;border:1px solid var(--border);
+  z-index:12;pointer-events:auto;box-sizing:border-box;
+}
+.zone-resize-handle.nw{top:-4px;left:-4px;cursor:nw-resize}
+.zone-resize-handle.ne{top:-4px;right:-4px;cursor:ne-resize}
+.zone-resize-handle.sw{bottom:-4px;left:-4px;cursor:sw-resize}
+.zone-resize-handle.se{bottom:-4px;right:-4px;cursor:se-resize}
+.zone-resize-handle.n{top:-4px;left:50%;margin-left:-4px;cursor:n-resize}
+.zone-resize-handle.s{bottom:-4px;left:50%;margin-left:-4px;cursor:s-resize}
+.zone-resize-handle.w{top:50%;margin-top:-4px;left:-4px;cursor:w-resize}
+.zone-resize-handle.e{top:50%;margin-top:-4px;right:-4px;cursor:e-resize}
+
+/* zone drawing preview */
+.zone-draw-preview{
+  position:absolute;pointer-events:none;z-index:15;
+  border:2px dashed var(--green);background:rgba(63,185,80,.12);
+  box-sizing:border-box;
+}
+
+/* Active add-zone button */
+#btn-add-zone.active{background:var(--green);color:#000}
+
+/* ── Zone type chips ── */
+.zone-types-chips{display:flex;flex-wrap:wrap;gap:4px}
+.zone-types-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;white-space:nowrap}
+.zone-types-header > span:first-child{font-size:.82em;color:var(--muted);font-weight:600}
+.zone-types-status{font-size:.75em;color:var(--muted);margin-left:8px;white-space:nowrap}
 
 /* ── Модалка создания/редактирования типа пометки ── */
 .mt-modal-overlay{
@@ -1233,10 +1393,32 @@ html.theme-light .marker-type-chip.active{
 }
 .marker-display-mode label{cursor:pointer;display:flex;align-items:center;gap:4px}
 
-/* ── Centering Panel ──────────────────────────────────────── */
+/* ── Centering Panel (сворачиваемый) ─────────────────────── */
 .centering-panel{
   background:var(--surface);border-top:1px solid var(--border);
-  padding:10px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+}
+.centering-panel-header{
+  display:flex;align-items:center;gap:10px;padding:8px 20px;
+  cursor:pointer;user-select:none;
+  font-size:.9em;
+}
+.centering-panel-header:hover{background:rgba(0,0,0,.04)}
+.centering-panel-header .centering-panel-title{font-weight:500}
+.centering-panel-header .centering-panel-state{
+  font-size:.85em;color:var(--muted);
+}
+.centering-panel-header .centering-panel-state.on{color:var(--green)}
+.centering-panel-toggle-btn{
+  margin-left:auto;padding:4px 10px;font-size:.85em;
+  background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);cursor:pointer;
+}
+.centering-panel-toggle-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.centering-panel-body{
+  padding:10px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+  border-top:1px solid var(--border);
+}
+.centering-panel.collapsed .centering-panel-body{display:none}
 .centering-panel label{display:flex;align-items:center;gap:6px;font-size:.9em;cursor:pointer}
 .centering-panel select{
   background:var(--surface2);border:1px solid var(--border);color:var(--text);
@@ -1248,12 +1430,50 @@ html.theme-light .marker-type-chip.active{
 .centering-status .ok{color:var(--green)}
 .centering-status .warn{color:var(--yellow)}
 .centering-status .err{color:var(--red)}
+/* индикатор выбранного типа пометок (между навигацией по кадрам и масштабом) */
+.quick-annotation-indicator-wrap{
+  display:flex;
+  align-items:center;
+}
+.quick-annotation-indicator{
+  display:inline-flex;
+  align-items:center;
+  padding:4px 10px;
+  font-size:.9em;
+  border-radius:var(--radius, 4px);
+  border:1px solid var(--border);
+  cursor:pointer;
+  white-space:nowrap;
+  user-select:none;
+}
+/* Неактивное состояние: режим пометок выключен, тип запомнен */
+.quick-annotation-indicator{
+  background:#e8e8e8;
+  color:var(--muted, #666);
+  border-color:#ccc;
+}
+.quick-annotation-indicator:hover{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+/* Активное состояние: режим пометок включён */
+.quick-annotation-indicator.active{
+  border-color:var(--accent);
+  background:rgba(79, 195, 247, 0.2);
+  color:var(--accent);
+  font-weight:500;
+}
+.quick-annotation-indicator.active:hover{
+  background:rgba(79, 195, 247, 0.35);
+  color:var(--accent);
+}
+
 /* zoom control in viewer settings bar */
 .viewer-zoom-control{
   display:flex;
   align-items:center;
   gap:4px;
-  margin-left:auto;
 }
 .viewer-zoom-control label{
   display:flex;
@@ -1416,6 +1636,7 @@ html.theme-light{
   --border:#d0d7de; --text:#1f2328; --muted:#656d76;
   --accent:#0969da; --accent-hover:#0550ae;
   --green:#1a7f37; --yellow:#9a6700; --red:#cf222e;
+  --range-track-bg:#d1d5db;
 }
 html.theme-light body{background:var(--bg);color:var(--text)}
 html.theme-light .drop-zone{border-color:var(--border)}
@@ -1873,6 +2094,17 @@ html.theme-light .modal-dialog{background:var(--surface)}
     <!-- Tab: Раскадровка видео -->
     <div class="app-settings-panel" id="app-panel-video">
 
+      <!-- 0. Вертикальное выравнивание -->
+      <div class="app-settings-section">
+        <div class="app-settings-section-title">Вертикальное выравнивание</div>
+        <div class="app-settings-row">
+          <label>
+            <input type="checkbox" id="app-set-show-vertical-alignment" onchange="onAppSettingChange()">
+            Отображать настройки вертикального выравнивания
+          </label>
+        </div>
+      </div>
+
       <!-- 1. Автонастройка -->
       <div class="app-settings-section">
         <div class="app-settings-section-title">Автонастройка по умолчанию</div>
@@ -2031,6 +2263,23 @@ html.theme-light .modal-dialog{background:var(--surface)}
             <input type="checkbox" id="app-set-viewer-auto-rotate" onchange="onAppSettingChange()">
             Автозапуск автовращения по умолчанию
           </label>
+        </div>
+
+        <!-- Центрирование по рамке -->
+        <div class="app-settings-section">
+          <div class="app-settings-section-title">Центрирование по рамке</div>
+          <div class="app-settings-row">
+            <label>
+              <input type="checkbox" id="app-set-viewer-show-centering" onchange="onAppSettingChange();toggleCenteringExpandSettingState()">
+              Показывать раздел «Центрирование по рамке»
+            </label>
+          </div>
+          <div class="app-settings-row">
+            <label>
+              <input type="checkbox" id="app-set-viewer-centering-expanded" onchange="onAppSettingChange()">
+              Разворачивать раздел по умолчанию
+            </label>
+          </div>
         </div>
       </div>
 
@@ -2335,80 +2584,116 @@ html.theme-light .modal-dialog{background:var(--surface)}
         </span>
       </div>
 
-      <!-- Навигация по кадрам по центру панели просмотра -->
-      <div class="frame-nav">
-        <button onclick="prevFrame()">&#9664; Назад</button>
-        <span id="frame-info-text">Кадр 0 / 0</span>
-        <button id="btn-auto-rotate" title="Автовращение" onclick="toggleAutoRotate()">
-          <svg id="icon-auto-play" width="14" height="14" viewBox="0 0 14 14"><polygon points="2,0 14,7 2,14" fill="#2a2"/></svg>
-          <svg id="icon-auto-stop" width="14" height="14" viewBox="0 0 14 14" style="display:none"><rect x="1" y="1" width="12" height="12" rx="2" fill="#c00"/></svg>
-        </button>
-        <span id="frame-tc">00:00.000</span>
-        <button onclick="nextFrame()">Вперёд &#9654;</button>
+      <div class="viewer-settings-gap"></div>
+      <div class="viewer-settings-nav-cell">
+        <div class="frame-nav">
+          <button onclick="prevFrame()">&#9664; Назад</button>
+          <span id="frame-info-text">Кадр 0 / 0</span>
+          <button id="btn-auto-rotate" title="Автовращение" onclick="toggleAutoRotate()">
+            <svg id="icon-auto-play" width="14" height="14" viewBox="0 0 14 14"><polygon points="2,0 14,7 2,14" fill="#2a2"/></svg>
+            <svg id="icon-auto-stop" width="14" height="14" viewBox="0 0 14 14" style="display:none"><rect x="1" y="1" width="12" height="12" rx="2" fill="#c00"/></svg>
+          </button>
+          <span id="frame-tc">00:00.000</span>
+          <button onclick="nextFrame()">Вперёд &#9654;</button>
+        </div>
       </div>
-
-      <!-- Масштаб предпросмотра -->
-      <div class="viewer-zoom-control">
-        <label>Масштаб:
-          <button class="zoom-btn" onclick="changeViewerZoom(-10)" title="Уменьшить">−</button>
-          <input type="range" id="viewer-zoom-slider" min="100" max="300" value="100"
-                 oninput="setViewerZoom(+this.value)">
-          <button class="zoom-btn" onclick="changeViewerZoom(+10)" title="Увеличить">+</button>
-          <span id="viewer-zoom-val">100%</span>
-        </label>
+      <div class="viewer-settings-gap"></div>
+      <div id="quick-annotation-indicator-wrap" class="quick-annotation-indicator-wrap">
+        <span id="quick-annotation-indicator" class="quick-annotation-indicator" title="Клик — переключить режим пометок" onclick="onQuickAnnotationIndicatorClick()">Точки: Метки</span>
       </div>
-
-      <!-- Переключатель режима просмотра (оригинал / центрированные) справа -->
-      <div class="view-mode-toggle" id="view-mode-toggle" style="display:none">
-        <button id="btn-view-original" class="active" onclick="setViewMode('original')">Оригинал</button>
-        <button id="btn-view-centered" onclick="setViewMode('centered')">Центрированные</button>
+      <div class="viewer-settings-gap"></div>
+      <div class="viewer-settings-right-cell">
+        <div class="viewer-zoom-control">
+          <label>Масштаб:
+            <button class="zoom-btn" onclick="changeViewerZoom(-10)" title="Уменьшить">−</button>
+            <input type="range" id="viewer-zoom-slider" min="100" max="300" value="100"
+                   oninput="setViewerZoom(+this.value)">
+            <button class="zoom-btn" onclick="changeViewerZoom(+10)" title="Увеличить">+</button>
+            <span id="viewer-zoom-val">100%</span>
+          </label>
+        </div>
+        <div class="view-mode-toggle" id="view-mode-toggle" style="display:none">
+          <button id="btn-view-original" class="active" onclick="setViewMode('original')">Оригинал</button>
+          <button id="btn-view-centered" onclick="setViewMode('centered')">Центрированные</button>
+        </div>
       </div>
     </div>
 
-    <!-- Строка центрирования / трекер -->
-    <div class="centering-panel" id="centering-panel">
-      <label>
-        <input type="checkbox" id="chk-centering" onchange="onCenteringToggle()">
-        Центрировать объект по рамке
-      </label>
-      <button id="btn-setup-roi" disabled onclick="openRoiSelection()">&#127919; Настроить рамку</button>
-      <span class="centering-status" id="roi-status">Рамка не задана</span>
-      <select id="sel-tracker" disabled>
-        <option value="CSRT">Трекер: CSRT (точнее)</option>
-        <option value="MOSSE">Трекер: MOSSE (быстрее)</option>
-      </select>
-      <label id="lbl-stabilize" style="display:none">
-        <input type="checkbox" id="chk-stabilize">
-        Стабилизация (vidstab)
-      </label>
-      <button id="btn-gen-centered" disabled onclick="startCentering()">&#9881; Сгенерировать центрированные кадры</button>
-      <div class="centering-progress" id="centering-progress" style="display:none">
-        <div class="mini-bar"><div class="mini-fill" id="centering-fill"></div></div>
-        <span id="centering-progress-text">0 / 0</span>
+    <!-- Строка центрирования / трекер (сворачиваемая, по умолчанию свернута) -->
+    <div class="centering-panel collapsed" id="centering-panel">
+      <div class="centering-panel-header" id="centering-panel-header" onclick="toggleCenteringPanel()" title="Развернуть / свернуть">
+        <span class="centering-panel-title">Центрирование по рамке</span>
+        <span class="centering-panel-state" id="centering-panel-state">выкл</span>
+        <button type="button" class="centering-panel-toggle-btn" id="centering-panel-toggle-btn" onclick="event.stopPropagation();toggleCenteringPanel()">Развернуть</button>
+      </div>
+      <div class="centering-panel-body">
+        <label>
+          <input type="checkbox" id="chk-centering" onchange="onCenteringToggle()">
+          Центрировать объект по рамке
+        </label>
+        <button id="btn-setup-roi" disabled onclick="openRoiSelection()">&#127919; Настроить рамку</button>
+        <span class="centering-status" id="roi-status">Рамка не задана</span>
+        <select id="sel-tracker" disabled>
+          <option value="CSRT">Трекер: CSRT (точнее)</option>
+          <option value="MOSSE">Трекер: MOSSE (быстрее)</option>
+        </select>
+        <label id="lbl-stabilize" style="display:none">
+          <input type="checkbox" id="chk-stabilize">
+          Стабилизация (vidstab)
+        </label>
+        <button id="btn-gen-centered" disabled onclick="startCentering()">&#9881; Сгенерировать центрированные кадры</button>
+        <div class="centering-progress" id="centering-progress" style="display:none">
+          <div class="mini-bar"><div class="mini-fill" id="centering-fill"></div></div>
+          <span id="centering-progress-text">0 / 0</span>
+        </div>
       </div>
     </div>
 
     <!-- Единая панель пометок: управление слева + карточки справа -->
     <div class="markers-unified-row" id="markers-unified-row">
       <div class="markers-controls-left">
-        <div class="marker-tools">
-          <button id="btn-add-marker" onclick="toggleMarkerMode()">&#128204; Добавить пометку</button>
-          <span class="muted" style="font-size:.82em">или Ctrl + клик, или двойной клик по изображению</span>
-        </div>
-        <div class="marker-display-mode">
-          <label>
-            <input type="checkbox" id="chk-markers-always" onchange="onMarkersDisplayModeChange()">
-            Показывать тексты пометок всегда
-          </label>
-        </div>
-        <!-- Секция: Типы пометок -->
-        <div class="marker-types-section" id="marker-types-section">
-          <div class="marker-types-header">
-            <span>Типы пометок</span>
-            <button class="marker-types-add-btn" onclick="openMarkerTypeModal()" title="Создать новый тип">+</button>
-            <span class="marker-types-status" id="marker-types-status"></span>
+        <!-- Раздел: Пометки – точки -->
+        <div class="marker-section-a">
+          <div class="marker-section-header">
+            <span>Пометки – точки</span>
+            <span class="marker-help-icon" title="Включите режим и кликните по изображению, Ctrl+клик или двойной клик. Для выхода повторно нажмите кнопку.">?</span>
           </div>
-          <div class="marker-types-chips" id="marker-types-chips"></div>
+          <div class="marker-types-section" id="marker-types-section">
+            <div class="marker-types-header">
+              <span>Типы пометок</span>
+              <button class="marker-types-add-btn" onclick="openMarkerTypeModal()" title="Создать новый тип">+</button>
+              <span class="marker-types-status" id="marker-types-status"></span>
+            </div>
+            <div class="marker-types-chips" id="marker-types-chips"></div>
+          </div>
+          <div class="marker-display-mode">
+            <label>
+              <input type="checkbox" id="chk-markers-always" onchange="onMarkersDisplayModeChange()">
+              Показывать тексты точек всегда
+            </label>
+          </div>
+        </div>
+
+        <!-- Раздел: Пометки – зоны -->
+        <div class="marker-section-b">
+          <div class="marker-section-header">
+            <span>Пометки – зоны</span>
+            <span class="marker-help-icon" title="Включите режим и выделите прямоугольную область мышью на изображении. Для выхода: ПКМ по пустому месту или повторно нажмите кнопку.">?</span>
+          </div>
+          <div class="marker-types-section" id="zone-types-section">
+            <div class="zone-types-header">
+              <span>Типы зон</span>
+              <button class="marker-types-add-btn" onclick="openZoneTypeModal()" title="Создать новый тип зоны">+</button>
+              <span class="zone-types-status" id="zone-types-status"></span>
+            </div>
+            <div class="zone-types-chips" id="zone-types-chips"></div>
+          </div>
+          <div class="marker-display-mode">
+            <label>
+              <input type="checkbox" id="chk-zones-always" onchange="onZonesDisplayModeChange()">
+              Показывать тексты зон всегда
+            </label>
+          </div>
         </div>
       </div>
       <div class="markers-divider"></div>
@@ -2428,6 +2713,10 @@ html.theme-light .modal-dialog{background:var(--surface)}
         <input type="text" id="marker-popup-title-input" placeholder="Заголовок" style="width:100%;padding:6px;font-size:.9em;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-sizing:border-box">
       </div>
       <textarea id="marker-comment-input" placeholder="Комментарий к пометке…"></textarea>
+      <div id="marker-popup-color-wrapper" style="display:none;margin-top:8px">
+        <label style="display:block;margin-bottom:4px;font-size:.9em">Цвет</label>
+        <div class="mt-colors-grid" id="marker-popup-colors-grid"></div>
+      </div>
       <label id="marker-popup-show-always-label" style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:.9em;cursor:pointer">
         <input type="checkbox" id="marker-popup-show-always">
         <span>Показывать текст этой пометки всегда</span>
@@ -2450,8 +2739,30 @@ html.theme-light .modal-dialog{background:var(--surface)}
       <div class="marker-context-menu-item danger" data-action="delete">🗑️ Удалить</div>
     </div>
 
+    <!-- Попап зоны -->
+    <div class="marker-popup" id="zone-popup">
+      <div id="zone-popup-type-header" style="display:none;font-weight:600;margin-bottom:8px;color:var(--text)"></div>
+      <div id="zone-popup-title-wrapper" style="display:none;margin-bottom:8px">
+        <input type="text" id="zone-popup-title-input" placeholder="Название зоны" style="width:100%;padding:6px;font-size:.9em;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-sizing:border-box">
+      </div>
+      <textarea id="zone-comment-input" placeholder="Комментарий к зоне…"></textarea>
+      <div id="zone-popup-color-wrapper" style="display:none;margin-top:8px">
+        <label style="display:block;margin-bottom:4px;font-size:.9em">Цвет</label>
+        <div class="mt-colors-grid" id="zone-popup-colors-grid"></div>
+      </div>
+      <label id="zone-popup-show-always-label" style="display:flex;align-items:center;gap:6px;margin-top:8px;font-size:.9em;cursor:pointer">
+        <input type="checkbox" id="zone-popup-show-always">
+        <span>Показывать текст этой пометки всегда</span>
+      </label>
+      <div class="marker-popup-actions">
+        <button id="zone-popup-delete-btn" onclick="deleteZoneFromPopup()" style="background:var(--red);color:#fff;display:none">Удалить</button>
+        <button onclick="cancelZonePopup()">Отмена</button>
+        <button onclick="saveZonePopup()" style="background:var(--green);color:#000">Сохранить</button>
+      </div>
+    </div>
+
     <!-- Подтверждение удаления -->
-    <div class="marker-confirm-popup" id="marker-confirm-popup">
+    <div class="marker-confirm-popup" id="marker-confirm-popup" tabindex="-1">
       <p>Удалить пометку?</p>
       <div class="confirm-actions">
         <button onclick="confirmDeleteMarker(false)">Нет</button>
@@ -2467,18 +2778,62 @@ html.theme-light .modal-dialog{background:var(--surface)}
           <label>Название</label>
           <input type="text" id="mt-input-title" placeholder="например: Яма, Знаки…" maxlength="40">
         </div>
-        <div class="mt-field">
-          <label>Цвет</label>
+        <div class="mt-field" id="mt-field-color">
+          <label id="mt-label-color">Цвет</label>
           <div class="mt-colors-grid" id="mt-colors-grid"></div>
+        </div>
+        <div class="mt-checkbox" id="mt-wrap-allow-instance-color" style="display:none">
+          <input type="checkbox" id="mt-chk-allow-instance-color">
+          <label for="mt-chk-allow-instance-color">Разрешить менять цвет у отдельных меток</label>
         </div>
         <div class="mt-checkbox">
           <input type="checkbox" id="mt-chk-require-comment">
           <label for="mt-chk-require-comment">Предоставить возможность оставления комментария</label>
         </div>
+        <div class="mt-checkbox" id="mt-wrap-show-editor-on-create">
+          <input type="checkbox" id="mt-chk-show-editor-on-create">
+          <label for="mt-chk-show-editor-on-create">Окно комментария при создании</label>
+        </div>
+        <div class="mt-checkbox" id="mt-wrap-use-default-on-dblclick" style="display:none">
+          <input type="checkbox" id="mt-chk-use-default-on-dblclick">
+          <label for="mt-chk-use-default-on-dblclick">Использовать метку «Метки» при двойном клике, если нет активного типа пометок</label>
+        </div>
         <div class="mt-modal-actions">
           <button class="mt-delete-btn" id="mt-delete-btn" style="display:none" onclick="deleteMarkerTypeFromModal()">Удалить тип</button>
           <button onclick="closeMarkerTypeModal()">Отмена</button>
           <button onclick="saveMarkerType()" style="background:var(--green);color:#000">Сохранить</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Модалка: Создание / редактирование типа зоны -->
+    <div class="mt-modal-overlay" id="zt-modal-overlay" onclick="if(event.target===this)closeZoneTypeModal()">
+      <div class="mt-modal">
+        <h3 id="zt-modal-title">Новый тип зоны</h3>
+        <div class="mt-field">
+          <label>Название</label>
+          <input type="text" id="zt-input-title" placeholder="например: Дефект, Область…" maxlength="40">
+        </div>
+        <div class="mt-field" id="zt-field-color">
+          <label id="zt-label-color">Цвет</label>
+          <div class="mt-colors-grid" id="zt-colors-grid"></div>
+        </div>
+        <div class="mt-checkbox" id="zt-wrap-allow-instance-color" style="display:none">
+          <input type="checkbox" id="zt-chk-allow-instance-color">
+          <label for="zt-chk-allow-instance-color">Разрешить менять цвет у отдельных зон</label>
+        </div>
+        <div class="mt-checkbox">
+          <input type="checkbox" id="zt-chk-require-comment">
+          <label for="zt-chk-require-comment">Предоставить возможность оставления комментария</label>
+        </div>
+        <div class="mt-checkbox" id="zt-wrap-show-editor-on-create">
+          <input type="checkbox" id="zt-chk-show-editor-on-create">
+          <label for="zt-chk-show-editor-on-create">Окно комментария при создании</label>
+        </div>
+        <div class="mt-modal-actions">
+          <button class="mt-delete-btn" id="zt-delete-btn" style="display:none" onclick="deleteZoneTypeFromModal()">Удалить тип</button>
+          <button onclick="closeZoneTypeModal()">Отмена</button>
+          <button onclick="saveZoneType()" style="background:var(--green);color:#000">Сохранить</button>
         </div>
       </div>
     </div>
@@ -2723,6 +3078,26 @@ html.theme-light .modal-dialog{background:var(--surface)}
 
 <!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
 <script>
+/* ── Синхронизация CSS-переменной --range-pct для заливки трека (WebKit) ── */
+function syncRangePct(input){
+  if(!input || input.type !== 'range') return;
+  const min = parseFloat(input.getAttribute('min')) || 0;
+  const max = parseFloat(input.getAttribute('max')) || 100;
+  const val = parseFloat(input.value) || min;
+  const pct = (max > min) ? ((val - min) / (max - min) * 100) : 0;
+  input.style.setProperty('--range-pct', pct + '%');
+}
+function syncAllRangeInputs(){
+  document.querySelectorAll('input[type=range]').forEach(syncRangePct);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  syncAllRangeInputs();
+  document.querySelectorAll('input[type=range]').forEach(el => {
+    el.addEventListener('input', () => syncRangePct(el));
+    el.addEventListener('change', () => syncRangePct(el));
+  });
+});
+
 /* ── Состояние ─────────────────────────────────────────────── */
 const APP_BUILD_TS = '2026-02-28T12:42:00';
 let projectId = null;
@@ -2734,19 +3109,63 @@ let framesAlreadyGenerated = false;
 let initialGenerationSettings = null; // snapshot of settings used for последней генерации
 let isReadOnly = false; // true for projects imported from ZIP
 
-let markerMode = false;          // режим добавления пометок
+let markerMode = true;           // режим добавления пометок-точек (дефолт «Метки» всегда включён)
 // markerMoveMode удалён — перемещение теперь всегда через drag-and-drop на точке
 let allMarkers = [];             // все маркеры текущей генерации
 let allMarkerTypes = [];         // типы пометок проекта
-let activeMarkerTypeId = null;   // id активного типа (null = обычная пометка)
+let activeMarkerTypeId = '__default__';   // id активного типа (дефолт «Метки» не может быть неактивным)
+let lastSelectedMarkerTypeId = '__default__';  // последний выбранный тип точек (для быстрого переключателя)
+let lastSelectedZoneTypeId = null;   // последний выбранный тип зон (для быстрого переключателя)
+let lastSelectedAnnotationKind = 'points';  // 'points' | 'zones' — что было выбрано последним (для кнопки быстрого доступа и Esc)
+let lastUsedPlacementDefined = false;       // true после первого выбора/выхода из режима — чтобы Ctrl/ПКМ не включали режим «с нуля»
+let placedDefaultPointByDoubleClick = false; // true: дефолтная точка поставлена двойным кликом без явного выбора типа — не менять быстрый доступ
 let currentGenerationId = '';    // generation_id из index.json
 let editingMarkerId = null;      // id маркера, комментарий которого редактируем
 let pendingMarkerDot = null;     // временный DOM-элемент новой точки
 var _popupJustClosed = false;    // флаг: попап только что закрыт (не создавать новую пометку)
-let markersShowAlways = false;   // режим отображения текстов пометок: true = всегда, false = по наведению
+let markersShowAlways = false;   // режим отображения текстов точек: true = всегда, false = по наведению
 let selectedCardMarkerId = null; // id пометки, выбранной кликом по карточке
 let pendingDeleteMarkerId = null; // id маркера, ожидающего подтверждения удаления
 let contextMenuMarkerId = null;   // id маркера для контекстного меню
+
+// ── Zone state ──
+let zoneMode = false;            // режим добавления зон
+let allZones = [];               // все зоны текущей генерации
+let allZoneTypes = [];           // типы зон проекта
+let activeZoneTypeId = null;     // id активного типа зоны (null = обычная зона)
+let editingZoneId = null;        // id зоны, которую редактируем
+let zonesShowAlways = false;     // режим отображения текстов зон
+let selectedZoneId = null;       // id выбранной зоны
+let pendingDeleteZoneId = null;  // id зоны, ожидающей подтверждения удаления
+let _zoneDraw = null;            // данные рисуемой зоны {startX, startY, el}
+let _zoneDragging = false;       // флаг: зона перемещается
+let _zoneResizing = false;       // флаг: зона ресайзится
+let _cancelZoneDragResize = false; // Esc отменил drag/resize — onUp не сохраняет
+let _ztEditingId = null;         // id типа зоны, редактируемого в модалке
+
+/** Режим взаимодействия на canvas: navigate | drawZone | editZone | placePoint. */
+function getInteractionMode(ev){
+  if(_zoneDraw !== null) return 'drawZone';
+  if(_zoneDragging || _zoneResizing) return 'editZone';
+  if(zoneMode && activeZoneTypeId){
+    const t = ev && ev.target;
+    if(t && ((t.classList && (t.classList.contains('zone-rect') || t.classList.contains('zone-resize-handle'))) || (t.closest && (t.closest('.zone-rect') || t.closest('.zone-resize-handle')))))
+      return 'editZone';
+    return 'drawZone';
+  }
+  if(markerMode) return 'placePoint';
+  return 'navigate';
+}
+
+/** Блокировать ли drag-пролистывание по изображению. Только зоны блокируют навигацию;
+ *  режим точек (markerMode) не блокирует — там перелистывание разрешено, точка ставится по dblclick. */
+function shouldBlockImageDragNavigation(){
+  if(_zoneDraw !== null) return true;
+  if(_zoneDragging || _zoneResizing) return true;
+  if(zoneMode && activeZoneTypeId) return true;
+  return false;
+}
+let _ztSelectedColor = '#3fb950';
 // Диапазон чувствительности: 1–MaxSensitivity, значение по умолчанию — 50
 let sensitivity = 50;
 let maxSensitivity = 100;
@@ -2777,6 +3196,8 @@ let panStartX = 0;
 let panStartY = 0;
 let panStartPanX = 0;
 let panStartPanY = 0;
+let rightMouseDown = false;        // ПКМ нажата (для различения клика и pan)
+const RIGHT_CLICK_PAN_THRESHOLD_PX = 5;  // порог движения для начала pan (иначе — одиночный клик)
 
 // (tlDragging removed — timeline uses new pan/seek system)
 
@@ -3075,9 +3496,10 @@ const _APP_DEFAULTS = {
     show_project_buttons:true,
     project_buttons:{save:true,reset:true,info:true},
     show_kpi:true,
-    kpi_items:{duration:true,frames:true,step:true,frame_size:true,total_size:true,percent:true}
+    kpi_items:{duration:true,frames:true,step:true,frame_size:true,total_size:true,percent:true},
+    show_vertical_alignment_settings:false
   },
-  viewer:{default_sensitivity:50,max_sensitivity:100,default_infinite_rotation:false,default_auto_rotate:false}
+  viewer:{default_sensitivity:50,max_sensitivity:100,default_infinite_rotation:false,default_auto_rotate:false,show_centering_section:false,centering_section_expanded_by_default:false}
 };
 
 function _deepClone(o){ return JSON.parse(JSON.stringify(o)); }
@@ -3091,6 +3513,7 @@ function _ensureSettingsShape(s){
   if(!s.ui) s.ui = {};
   if(!s.ui.project_buttons) s.ui.project_buttons = {save:true,reset:true,info:true};
   if(!s.ui.kpi_items) s.ui.kpi_items = {duration:true,frames:true,step:true,frame_size:true,total_size:true,percent:true};
+  if(typeof s.ui.show_vertical_alignment_settings !== 'boolean') s.ui.show_vertical_alignment_settings = false;
   if(!s.viewer) s.viewer = {default_sensitivity:50,max_sensitivity:100,default_infinite_rotation:false,default_auto_rotate:false};
   if(typeof s.viewer.max_sensitivity !== 'number') s.viewer.max_sensitivity = 100;
   s.viewer.max_sensitivity = Math.max(20, Math.min(200, s.viewer.max_sensitivity));
@@ -3098,6 +3521,8 @@ function _ensureSettingsShape(s){
   s.viewer.default_sensitivity = Math.max(1, Math.min(s.viewer.max_sensitivity, s.viewer.default_sensitivity));
   if(typeof s.viewer.default_infinite_rotation !== 'boolean') s.viewer.default_infinite_rotation = false;
   if(typeof s.viewer.default_auto_rotate !== 'boolean') s.viewer.default_auto_rotate = false;
+  if(typeof s.viewer.show_centering_section !== 'boolean') s.viewer.show_centering_section = false;
+  if(typeof s.viewer.centering_section_expanded_by_default !== 'boolean') s.viewer.centering_section_expanded_by_default = false;
   return s;
 }
 
@@ -3233,6 +3658,9 @@ function onAppSettingChange(){
   const prevAutosave = !!s.behavior.autosave_enabled;
   const prevSave = !s.ui.project_buttons ? true : s.ui.project_buttons.save !== false;
 
+  const vaEl = document.getElementById('app-set-show-vertical-alignment');
+  if(vaEl) s.ui.show_vertical_alignment_settings = vaEl.checked;
+
   const autotuneEl = document.getElementById('app-set-autotune');
   if(autotuneEl) s.defaults.auto_tune_enabled = autotuneEl.checked;
   updateDefaultsSectionsDisabledState();
@@ -3309,6 +3737,12 @@ function onAppSettingChange(){
   if(vInf) s.viewer.default_infinite_rotation = vInf.checked;
   const vAr = document.getElementById('app-set-viewer-auto-rotate');
   if(vAr) s.viewer.default_auto_rotate = vAr.checked;
+  const vShowCentering = document.getElementById('app-set-viewer-show-centering');
+  if(vShowCentering) s.viewer.show_centering_section = vShowCentering.checked;
+  const vCenteringExpanded = document.getElementById('app-set-viewer-centering-expanded');
+  if(vCenteringExpanded){
+    s.viewer.centering_section_expanded_by_default = vShowCentering && vShowCentering.checked ? vCenteringExpanded.checked : false;
+  }
 }
 
 /* Guard: if autosave OFF → force Save button visible */
@@ -3392,6 +3826,10 @@ function populateAppSettingsModal(){
   document.getElementById('theme-btn-light')?.classList.toggle('active', s.theme === 'light');
   document.getElementById('theme-btn-dark')?.classList.toggle('active', s.theme === 'dark');
 
+  // Вертикальное выравнивание
+  const vaEl = document.getElementById('app-set-show-vertical-alignment');
+  if(vaEl) vaEl.checked = !!s.ui.show_vertical_alignment_settings;
+
   // Autotune
   const atEl = document.getElementById('app-set-autotune');
   if(atEl) atEl.checked = !!s.defaults.auto_tune_enabled;
@@ -3470,11 +3908,25 @@ function populateAppSettingsModal(){
   if(vInf) vInf.checked = !!vw.default_infinite_rotation;
   const vAr = document.getElementById('app-set-viewer-auto-rotate');
   if(vAr) vAr.checked = !!vw.default_auto_rotate;
+  const vShowCentering = document.getElementById('app-set-viewer-show-centering');
+  if(vShowCentering) vShowCentering.checked = !!vw.show_centering_section;
+  const vCenteringExpanded = document.getElementById('app-set-viewer-centering-expanded');
+  if(vCenteringExpanded) vCenteringExpanded.checked = !!vw.centering_section_expanded_by_default;
+  toggleCenteringExpandSettingState();
 
   // Самовосстановление настроек сохранения, если с сервера пришло
   // недопустимое состояние (оба механизма выключены).
   updateDefaultsSectionsDisabledState();
   enforceAutosaveSaveGuard();
+}
+
+function toggleCenteringExpandSettingState(){
+  const showEl = document.getElementById('app-set-viewer-show-centering');
+  const expandedEl = document.getElementById('app-set-viewer-centering-expanded');
+  if(!expandedEl) return;
+  const showOn = showEl && showEl.checked;
+  expandedEl.disabled = !showOn;
+  if(!showOn && expandedEl.checked) expandedEl.checked = false;
 }
 
 function switchAppSettingsTab(tab){
@@ -3513,6 +3965,7 @@ function openAppSettingsModal(){
   populateAppSettingsModal();
   switchAppSettingsTab('general');
   modal.classList.remove('hidden');
+  syncAllRangeInputs();
 }
 
 function closeAppSettingsModal(){
@@ -3664,6 +4117,28 @@ function applyUISettings(){
       });
     }
   }
+
+  // --- Viewer: centering panel visibility and expanded state ---
+  if(document.getElementById('screen-viewer') && document.getElementById('screen-viewer').classList.contains('active')){
+    applyViewerCenteringPanelSettings();
+  }
+}
+
+function applyViewerCenteringPanelSettings(){
+  if(!_appSettings || !_appSettings.viewer) return;
+  const panel = document.getElementById('centering-panel');
+  if(!panel) return;
+  const show = _appSettings.viewer.show_centering_section === true;
+  if(!show){
+    panel.style.display = 'none';
+    return;
+  }
+  panel.style.display = '';
+  const expanded = _appSettings.viewer.centering_section_expanded_by_default === true;
+  panel.classList.toggle('collapsed', !expanded);
+  const btn = document.getElementById('centering-panel-toggle-btn');
+  if(btn) btn.textContent = expanded ? 'Свернуть' : 'Развернуть';
+  updateCenteringPanelHeaderState();
 }
 
 // Load settings on page load
@@ -4716,7 +5191,7 @@ async function applyProjectSensitivityMax(){
     sensVal.textContent = String(sensitivity);
   }
   
-  // Пересчитать нормализацию (getViewerSensitivityNorm использует maxSensitivity)
+  // Пересчитать интервалы автовращения и скорость drag (используют текущую чувствительность)
   onSensitivityChange();
 }
 
@@ -5130,6 +5605,17 @@ function _showScreenRaw(name){
   // Show settings button only on upload screen
   const settingsBtnWrap = document.getElementById('app-settings-btn-wrap');
   if(settingsBtnWrap) settingsBtnWrap.style.display = name === 'upload' ? '' : 'none';
+  // Единый источник истины: при показе просмотра кадров брать чувствительность с ползунка
+  if(name === 'viewer'){
+    syncViewerSensitivityFromSlider();
+    // #region agent log
+    (function(){
+      const sl = document.getElementById('sens-slider');
+      fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f1e6e9'},body:JSON.stringify({sessionId:'f1e6e9',location:'_showScreenRaw(viewer)',message:'sensitivity on viewer show',data:{sensitivity,sliderValue:sl?sl.value:null},timestamp:Date.now(),hypothesisId:'H3'})}).catch(()=>{});
+    })();
+    // #endregion
+  }
+  syncAllRangeInputs();
 }
 
 /**
@@ -6186,6 +6672,8 @@ async function initViewer(){
   _restoreMarkersDisplayMode();
   buildTimeline();
   await loadMarkers();
+  await loadZones();
+  await loadZoneTypes();
   goToFrame(0);
   showScreen('viewer');
 
@@ -6194,30 +6682,30 @@ async function initViewer(){
 }
 
 function applyReadOnlyViewerScreen(){
-  const btnMarker = $('btn-add-marker');
   const btnBack = $('btn-viewer-back');
   const centeringPanel = $('centering-panel');
 
+  // Применить видимость и состояние «свернут/развернут» из настроек приложения
+  applyViewerCenteringPanelSettings();
+
   if(!isReadOnly){
-    // Ensure controls are enabled for normal projects
-    if(btnMarker) btnMarker.disabled = false;
-    // Show centering panel & back button normally
-    if(centeringPanel) centeringPanel.style.display = '';
+    // Back button and centering panel visibility already set by applyViewerCenteringPanelSettings
     if(btnBack) btnBack.style.display = '';
-    // Reset marker tools
-    document.querySelectorAll('.marker-tools button').forEach(b => b.disabled = false);
+    // Re-render chips to ensure they're enabled (read-only check is in toggle functions)
+    renderMarkerTypeChips();
+    renderZoneTypeChips();
     return;
   }
 
   // ── Read-only mode ──
+  // Note: marker and zone creation is disabled via isReadOnly checks in toggleMarkerMode/toggleZoneMode
+  // and in event handlers. The chips will be rendered but clicking them won't activate modes.
 
-  // Disable marker tools (creating markers writes data)
-  document.querySelectorAll('.marker-tools button').forEach(b => b.disabled = true);
-  if(btnMarker) btnMarker.disabled = true;
-
-  // Disable centering panel (generates data)
+  // Disable centering panel (generates data); кнопка «Развернуть/Свернуть» остаётся активной
   if(centeringPanel){
-    centeringPanel.querySelectorAll('button, select, input').forEach(el => el.disabled = true);
+    centeringPanel.querySelectorAll('button, select, input').forEach(el => {
+      if(!el.classList.contains('centering-panel-toggle-btn')) el.disabled = true;
+    });
   }
 
   // "Back to settings" button: still allow navigation but settings are locked
@@ -6226,6 +6714,10 @@ function applyReadOnlyViewerScreen(){
   // Export ZIP stays enabled (re-export same content)
   const btnExport = $('btn-export');
   if(btnExport) btnExport.disabled = false;
+  
+  // Re-render chips to reflect read-only state
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
 }
 
 /* ── Навигация по кадрам ───────────────────────────────────── */
@@ -6241,12 +6733,17 @@ function goToFrame(idx){
   scrollTimelineToFrame(idx);
   // Сохраняем масштаб и позицию при переключении кадров
   applyViewerTransform();
-  // Обновить маркеры для нового кадра
+  // Обновить маркеры и зоны для нового кадра
   renderMarkersForCurrentFrame();
+  renderZonesForCurrentFrame();
   // Если кадр сменился не через карточку — сбрасываем выделение карточки
   if(selectedCardMarkerId){
     const selMarker = allMarkers.find(m => m.id === selectedCardMarkerId);
     if(!selMarker || selMarker.frame_index !== idx) selectedCardMarkerId = null;
+  }
+  if(selectedZoneId){
+    const selZone = allZones.find(z => z.id === selectedZoneId);
+    if(!selZone || selZone.frame_index !== idx) selectedZoneId = null;
   }
   updateAnnList();
   // Подсветить маркер на таймлайне, если есть
@@ -6260,9 +6757,9 @@ function onInfiniteLoopToggle(enabled){
 /* ── Автовращение ──────────────────────────────────────────── */
 
 function getAutoRotateInterval(){
-  // Чувствительность 1..maxSensitivity → интервал от 500 мс (медленно) до 30 мс (быстро)
-  const s = getViewerSensitivityNorm(); // 0..1
-  return Math.round(500 - 470 * s);     // 500 → 30
+  // База 50 = 500 мс; 100 = 250 мс (2x); 200 = 125 мс (4x). Нижний предел 30 мс.
+  const mult = getViewerSensitivitySpeedMultiplier();
+  return Math.max(30, Math.round(500 / mult));
 }
 
 function toggleAutoRotate(){
@@ -6891,6 +7388,30 @@ function frameFromTimelineEvent(e){
 }
 
 /* ── Чувствительность drag-пролистывания ───────────────────── */
+/** Синхронизировать глобальную переменную sensitivity со значением ползунка (единый источник истины). */
+function syncViewerSensitivityFromSlider(){
+  const sensSlider = document.getElementById('sens-slider');
+  if(!sensSlider) return;
+  const v = parseInt(sensSlider.value, 10);
+  if(!isNaN(v) && v >= 1){
+    sensitivity = Math.max(1, Math.min(maxSensitivity, v));
+    const sensVal = document.getElementById('sens-val');
+    if(sensVal) sensVal.textContent = String(sensitivity);
+  }
+}
+
+/** Базовая точка шкалы чувствительности: 50 = 1x скорость. */
+const SENSITIVITY_BASE = 50;
+
+/**
+ * Множитель скорости перемотки относительно базы (50).
+ * 50 → 1, 100 → 2, 200 → 4. Рост значения шкалы реально ускоряет навигацию.
+ */
+function getViewerSensitivitySpeedMultiplier(){
+  const s = clamp(sensitivity, 1, maxSensitivity);
+  return Math.max(0.2, s / SENSITIVITY_BASE);
+}
+
 function getViewerSensitivityNorm(){
   // Диапазон ползунка: 1–maxSensitivity.
   // sRaw = значение ползунка, s = (sRaw - 1) / (maxSensitivity - 1) ∈ [0,1].
@@ -7015,25 +7536,34 @@ if(frameArea){
   // Подавляем контекстное меню на области предпросмотра
   frameArea.addEventListener('contextmenu', e => { e.preventDefault(); });
 
-  // ПКМ mousedown → начинаем панорамирование
+  // ПКМ mousedown: запоминаем позицию; pan включается только после движения (порог), иначе — одиночный клик (выход из режима зоны)
   frameArea.addEventListener('mousedown', e => {
     if(e.button !== 2) return;           // только ПКМ
     if(isAutoRotate) stopAutoRotate();
-    if(viewerZoom <= 100) return;        // при 100% не нужно
-    isPanning = true;
+    rightMouseDown = true;
     panStartX = e.clientX;
     panStartY = e.clientY;
     panStartPanX = viewerPanX;
     panStartPanY = viewerPanY;
-    frameArea.style.cursor = 'grabbing';
     e.preventDefault();
   });
 }
 
 /* ── Drag по области предпросмотра для прокрутки (ЛКМ) ───────── */
+// Порог движения (px): меньше — считаем кликом; больше — перелистывание (чтобы dblclick не запускал scrub)
+const IMG_DRAG_SCRUB_THRESHOLD_PX = 5;
 if(frameArea){
+  // Остановка автопрокрутки при любом нажатии ЛКМ в области изображения (независимо от режима пометок)
+  frameArea.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    const imgRect = frameImg.getBoundingClientRect();
+    if (e.clientX < imgRect.left || e.clientX > imgRect.right ||
+        e.clientY < imgRect.top || e.clientY > imgRect.bottom) return;
+    stopAutoRotate();
+  }, true);
+
   frameArea.addEventListener('mousedown',e=>{
-    if(markerMode) return;            // в режиме добавления пометок drag-скролл отключаем
+    if(shouldBlockImageDragNavigation()) return;  // только зоны блокируют; режим точек не блокирует
     if(e.ctrlKey) return;             // Ctrl+клик — добавление пометки, не drag
     if(e.button!==0) return;          // только левая кнопка
     if(isAutoRotate) stopAutoRotate();
@@ -7053,6 +7583,16 @@ if(frameArea){
   });
 }
 document.addEventListener('mousemove',e=>{
+  // ПКМ: начинаем pan только после движения выше порога (иначе — одиночный клик для выхода из режима зоны)
+  if(rightMouseDown && !isPanning && viewerZoom > 100){
+    const dx = Math.abs(e.clientX - panStartX);
+    const dy = Math.abs(e.clientY - panStartY);
+    if(dx > RIGHT_CLICK_PAN_THRESHOLD_PX || dy > RIGHT_CLICK_PAN_THRESHOLD_PX){
+      isPanning = true;
+      const fa = $('frame-area');
+      if(fa) fa.style.cursor = 'grabbing';
+    }
+  }
   // Панорамирование (ПКМ-drag)
   if(isPanning){
     const dx = e.clientX - panStartX;
@@ -7065,8 +7605,17 @@ document.addEventListener('mousemove',e=>{
     return;
   }
 
+  // Блокируем пролистывание только в режиме зон (рисование/движение/ресайз)
+  if(shouldBlockImageDragNavigation()){
+    if(imgDragging) imgDragging = false;
+    return;
+  }
+
   if(!imgDragging) return;
   if(!framesData || totalFrames<=0) return;
+
+  // Не считаем перелистыванием микродвижение (двойной клик не должен менять кадр)
+  if(Math.abs(e.clientX - imgDragStartX) < IMG_DRAG_SCRUB_THRESHOLD_PX) return;
 
   // Инкрементальная горизонтальная дельта с предыдущего события
   const dxStep = e.clientX-imgDragPrevX;
@@ -7078,27 +7627,10 @@ document.addEventListener('mousemove',e=>{
 
   const W = imgDragAreaWidth || 1;
 
-  // Нормированная чувствительность s ∈ [0,1]
-  const s = getViewerSensitivityNorm();
-
-  // Базовая логика скорости с учетом maxSensitivity
-  // BaseMax = 50 (базовый максимум для расчета скорости)
-  const BaseMax = 50;
-  const speedMultiplier = maxSensitivity / BaseMax;
-  
-  // minFramesPerFullDrag = max(3, round(0.05 * N))
+  // Множитель скорости: 50→1x, 100→2x, 200→4x. Больше значение — быстрее пролистывание.
+  const speedMultiplier = getViewerSensitivitySpeedMultiplier();
   const minFramesPerFullDrag = Math.max(3, Math.round(0.05 * N));
-  
-  // Максимум на полном проходе растет с maxSensitivity
-  // При maxSens=50: framesPerFullDragAtMax = N
-  // При maxSens=100: framesPerFullDragAtMax = 2*N
-  // При maxSens=200: framesPerFullDragAtMax = 4*N
-  const framesPerFullDragAtMax = Math.round(N * speedMultiplier);
-  
-  // Линейная интерполяция между минимумом и максимумом
-  const framesPerFullDrag =
-    minFramesPerFullDrag +
-    (framesPerFullDragAtMax - minFramesPerFullDrag) * s;
+  const framesPerFullDrag = Math.max(minFramesPerFullDrag, Math.round(N * speedMultiplier));
 
   // Сырой сдвиг в кадрах для текущего шага мыши
   const rawStepShift = (dxStep*framesPerFullDrag)/W;
@@ -7121,12 +7653,25 @@ document.addEventListener('mousemove',e=>{
 
   if(nf!==currentFrame) goToFrame(nf);
 });
-document.addEventListener('mouseup',()=>{
+document.addEventListener('mouseup',e=>{
   imgDragging=false;
-  if(isPanning){
-    isPanning=false;
+  if(e.button === 2){
+    // #region agent log (ПКМ: почему не срабатывает toggle)
     const fa = $('frame-area');
-    if(fa) fa.style.cursor = '';
+    const empty = isRightClickOnEmptySpace(e);
+    const why = typeof _debugWhyNotEmptySpace==='function' ? _debugWhyNotEmptySpace(e) : '';
+    fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d1520a'},body:JSON.stringify({sessionId:'d1520a',location:'mouseup:button2',message:'PKM mouseup',data:{rightMouseDown,isPanning,empty,why,targetTag:e.target&&e.target.tagName,targetId:e.target&&e.target.id,targetClass:(e.target&&e.target.className)||'',faExists:!!fa,faContains:!!(fa&&e.target&&fa.contains(e.target))},timestamp:Date.now(),hypothesisId:'PKM'})}).catch(()=>{});
+    // #endregion
+    if(isPanning){
+      isPanning = false;
+      const _fa = $('frame-area');
+      if(_fa) _fa.style.cursor = '';
+    } else if(rightMouseDown && !isPanning && empty){
+      toggleLastUsedPlacementMode();
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    rightMouseDown = false;
   }
 });
 
@@ -7136,6 +7681,14 @@ const MT_PRESET_COLORS = [
   '#3fb950', '#58a6ff', '#d29922', '#f85149',
   '#bc8cff', '#f778ba', '#39d2c0', '#ff9f43'
 ];
+function getMarkerDisplayColor(m){
+  if((!m.type_id || m.type_id === '__default__') && m.color) return m.color;
+  return m.type_color || '#3fb950';
+}
+function getZoneDisplayColor(z){
+  if((!z.type_id || z.type_id === '__default__') && z.color) return z.color;
+  return z.type_color || '#3fb950';
+}
 let _mtEditingId = null; // id типа, который редактируем в модалке (null = создание нового)
 let _mtSelectedColor = MT_PRESET_COLORS[0];
 
@@ -7155,19 +7708,23 @@ function renderMarkerTypeChips(){
   const container = $('marker-types-chips');
   if(!container) return;
   container.innerHTML = '';
+  
   allMarkerTypes.forEach(t => {
+    const isDefault = t.id === '__default__';
+    const isActive = isDefault ? (markerMode && (!activeMarkerTypeId || activeMarkerTypeId === '__default__')) : (activeMarkerTypeId === t.id);
     const chip = document.createElement('span');
-    chip.className = 'marker-type-chip' + (activeMarkerTypeId === t.id ? ' active' : '');
-    chip.style.background = t.color;
+    chip.className = 'marker-type-chip' + (isActive ? ' active' : '');
+    chip.style.background = t.color || '#3fb950';
     chip.dataset.typeId = t.id;
-    chip.title = t.title + (t.require_comment ? ' (можно оставить комментарий)' : '');
+    chip.title = (isDefault ? 'Метки (тип по умолчанию)' : t.title) + (t.require_comment ? ' (можно оставить комментарий)' : '');
+    if(isReadOnly && isDefault) chip.style.opacity = '0.5';
 
     const dot = document.createElement('span');
     dot.className = 'chip-color-dot';
     dot.style.background = '#fff';
     chip.appendChild(dot);
 
-    const label = document.createTextNode(t.title);
+    const label = document.createTextNode(isDefault ? 'Метки' : t.title);
     chip.appendChild(label);
 
     const gear = document.createElement('span');
@@ -7179,46 +7736,185 @@ function renderMarkerTypeChips(){
     });
     chip.appendChild(gear);
 
-    // ПКМ → редактирование
-    chip.addEventListener('contextmenu', e => {
-      e.preventDefault();
-      openMarkerTypeModal(t.id);
-    });
-
-    // Клик → активация / деактивация
-    chip.addEventListener('click', e => {
-      if(e.target.classList.contains('chip-gear')) return;
-      if(activeMarkerTypeId === t.id){
-        activeMarkerTypeId = null;
-      } else {
-        activeMarkerTypeId = t.id;
-      }
-      renderMarkerTypeChips();
-    });
+    if(!isReadOnly){
+      chip.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        openMarkerTypeModal(t.id);
+      });
+      chip.addEventListener('click', e => {
+        if(e.target.classList.contains('chip-gear')) return;
+        const currentlyActive = isDefault ? (markerMode && (!activeMarkerTypeId || activeMarkerTypeId === '__default__')) : (activeMarkerTypeId === t.id);
+        if(currentlyActive){
+          if(isDefault){
+            // Клик по «Метки» при уже активном — явный выбор для быстрого доступа (сбрасываем флаг двойного клика)
+            if(placedDefaultPointByDoubleClick){
+              placedDefaultPointByDoubleClick = false;
+              lastUsedPlacementDefined = true;
+              lastSelectedAnnotationKind = 'points';
+              lastSelectedMarkerTypeId = '__default__';
+              renderMarkerTypeChips();
+              renderZoneTypeChips();
+              updateQuickAnnotationIndicator();
+            }
+            return; // Дефолтные «Метки» нельзя сделать неактивными
+          }
+          activeMarkerTypeId = null;
+          markerMode = false;
+          const fa = $('frame-area');
+          if(fa && !zoneMode) fa.style.cursor = '';
+        } else {
+          placedDefaultPointByDoubleClick = false;
+          lastUsedPlacementDefined = true;
+          lastSelectedAnnotationKind = 'points';
+          lastSelectedMarkerTypeId = t.id;
+          activeMarkerTypeId = t.id;
+          markerMode = true;
+          const fa = $('frame-area');
+          if(fa) fa.style.cursor = 'crosshair';
+          if(zoneMode) _deactivateZoneMode();
+          if(activeZoneTypeId) _clearZoneType();
+        }
+        renderMarkerTypeChips();
+        renderZoneTypeChips();
+        updateQuickAnnotationIndicator();
+      });
+    }
 
     container.appendChild(chip);
   });
   updateMarkerTypeStatus();
+  updateQuickAnnotationIndicator();
 }
 
 function updateMarkerTypeStatus(){
   const statusEl = $('marker-types-status');
   if(!statusEl) return;
-  if(activeMarkerTypeId){
-    const activeType = allMarkerTypes.find(t => t.id === activeMarkerTypeId);
-    if(activeType){
-      statusEl.textContent = 'Выбран: ' + activeType.title;
-    } else {
-      statusEl.textContent = 'Выбран: нет';
-    }
+  const activeType = getActiveMarkerType();
+  if(activeType){
+    statusEl.textContent = 'Выбран: ' + (activeType.id === '__default__' ? 'Метки' : activeType.title);
   } else {
     statusEl.textContent = 'Выбран: нет';
   }
 }
 
 function getActiveMarkerType(){
-  if(!activeMarkerTypeId) return null;
-  return allMarkerTypes.find(t => t.id === activeMarkerTypeId) || null;
+  if(activeMarkerTypeId) return allMarkerTypes.find(t => t.id === activeMarkerTypeId) || null;
+  if(markerMode) return allMarkerTypes.find(t => t.id === '__default__') || null;
+  return null;
+}
+
+/** Тип точки для постановки: всегда возвращает тип (по умолчанию «Метки»), чтобы двойной клик всегда мог поставить точку. */
+function getEffectiveMarkerType(){
+  if(activeMarkerTypeId) return allMarkerTypes.find(t => t.id === activeMarkerTypeId) || null;
+  return allMarkerTypes.find(t => t.id === '__default__') || null;
+}
+
+/** Последний выбранный тип для отображения на кнопке быстрого доступа (когда режим неактивен). */
+function getLastSelectedAnnotation(){
+  if(lastSelectedAnnotationKind === 'zones'){
+    const t = allZoneTypes.find(z => z.id === (lastSelectedZoneTypeId || '__default__'));
+    return { kind: 'zones', typeId: lastSelectedZoneTypeId || '__default__', typeName: t ? (t.id === '__default__' ? 'Зоны' : t.title) : 'Зоны' };
+  }
+  const mt = allMarkerTypes.find(t => t.id === (lastSelectedMarkerTypeId || '__default__'));
+  return { kind: 'points', typeId: lastSelectedMarkerTypeId || '__default__', typeName: mt ? (mt.id === '__default__' ? 'Метки' : mt.title) : 'Метки' };
+}
+
+/** Текущий активный тип для индикатора: если режим включён — текущий, иначе — последний выбранный (для подписи кнопки).
+ *  При постановке дефолтной точки двойным кликом без явного выбора — показываем последний явно выбранный тип (зона и т.д.), не «Точки: Метки». */
+function getEffectiveActiveAnnotation(){
+  if(placedDefaultPointByDoubleClick) return getLastSelectedAnnotation();
+  if(zoneMode && activeZoneTypeId){
+    const t = allZoneTypes.find(z => z.id === activeZoneTypeId);
+    return { kind: 'zones', typeId: activeZoneTypeId, typeName: t ? (t.id === '__default__' ? 'Зоны' : t.title) : 'Зоны' };
+  }
+  if(markerMode && activeMarkerTypeId){
+    const mt = allMarkerTypes.find(t => t.id === activeMarkerTypeId);
+    return { kind: 'points', typeId: activeMarkerTypeId, typeName: mt ? (mt.id === '__default__' ? 'Метки' : mt.title) : 'Метки' };
+  }
+  return getLastSelectedAnnotation();
+}
+
+function updateQuickAnnotationIndicator(){
+  const el = $('quick-annotation-indicator');
+  if(!el) return;
+  const a = getEffectiveActiveAnnotation();
+  // Дефолтные «Точки: Метки» считаются активными только если не поставлены «в фоне» (placedDefaultPointByDoubleClick)
+  const isDefaultPoints = (a.kind === 'points' && a.typeId === '__default__');
+  const isActive = !placedDefaultPointByDoubleClick && (isDefaultPoints || (markerMode && activeMarkerTypeId) || (zoneMode && activeZoneTypeId));
+  el.textContent = (a.kind === 'zones' ? 'Зоны: ' : 'Точки: ') + a.typeName;
+  el.classList.toggle('active', !!isActive);
+  el.title = isActive ? (isDefaultPoints ? 'Точки: Метки (режим по умолчанию)' : 'Клик — выключить режим пометок') : 'Клик — включить режим пометок («' + a.typeName + '»)';
+}
+
+function onQuickAnnotationIndicatorClick(){
+  if(isReadOnly) return;
+  const aBefore = getEffectiveActiveAnnotation();
+  placedDefaultPointByDoubleClick = false; // явное действие по быстрому доступу: выключаем «фоновый» режим дефолтной точки
+
+  // Логика клика должна опираться на тот тип, который отображён на кнопке (aBefore),
+  // а не на фактический активный режим после сброса placedDefaultPointByDoubleClick.
+  const isDefaultPoints = (aBefore.kind === 'points' && aBefore.typeId === '__default__');
+  let isActiveForClicked = false;
+  if(aBefore.kind === 'zones'){
+    if(aBefore.typeId === '__default__'){
+      isActiveForClicked = zoneMode && (!activeZoneTypeId || activeZoneTypeId === '__default__');
+    } else {
+      isActiveForClicked = zoneMode && activeZoneTypeId === aBefore.typeId;
+    }
+  } else { // points
+    if(aBefore.typeId === '__default__'){
+      isActiveForClicked = markerMode && (!activeMarkerTypeId || activeMarkerTypeId === '__default__');
+    } else {
+      isActiveForClicked = markerMode && activeMarkerTypeId === aBefore.typeId;
+    }
+  }
+
+  // Дефолтные «Точки: Метки» в активном состоянии нельзя выключить; в неактивном — клик включает их
+  if(isDefaultPoints && isActiveForClicked) return;
+
+  const fa = $('frame-area');
+  if(isActiveForClicked){
+    // Клик по активному типу — деактивация; сохраняем как last used
+    if(aBefore.kind === 'zones'){
+      lastUsedPlacementDefined = true;
+      lastSelectedAnnotationKind = 'zones';
+      lastSelectedZoneTypeId = activeZoneTypeId;
+      zoneMode = false;
+      activeZoneTypeId = null;
+      if(fa && !markerMode) fa.style.cursor = '';
+    } else {
+      lastUsedPlacementDefined = true;
+      lastSelectedAnnotationKind = 'points';
+      lastSelectedMarkerTypeId = activeMarkerTypeId || '__default__';
+      markerMode = false;
+      activeMarkerTypeId = null;
+      if(fa && !zoneMode) fa.style.cursor = '';
+    }
+    } else {
+    // Клик по неактивному типу — явное включение этого типа (приоритет над фоновыми режимами)
+    if(aBefore.kind === 'zones'){
+      zoneMode = true;
+      activeZoneTypeId = aBefore.typeId;
+      lastUsedPlacementDefined = true;
+      lastSelectedAnnotationKind = 'zones';
+      lastSelectedZoneTypeId = aBefore.typeId;
+      if(markerMode) _deactivateMarkerMode();
+      if(activeMarkerTypeId) _clearMarkerType();
+      if(fa) fa.style.cursor = 'crosshair';
+    } else {
+      markerMode = true;
+      activeMarkerTypeId = aBefore.typeId;
+      lastUsedPlacementDefined = true;
+      lastSelectedAnnotationKind = 'points';
+      lastSelectedMarkerTypeId = aBefore.typeId;
+      if(zoneMode) _deactivateZoneMode();
+      if(activeZoneTypeId) _clearZoneType();
+      if(fa) fa.style.cursor = 'crosshair';
+    }
+  }
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
+  updateQuickAnnotationIndicator();
 }
 
 function openMarkerTypeModal(editId){
@@ -7227,7 +7923,43 @@ function openMarkerTypeModal(editId){
   const titleEl = $('mt-modal-title');
   const inp = $('mt-input-title');
   const chk = $('mt-chk-require-comment');
+  const chkShowEditor = $('mt-chk-show-editor-on-create');
+  const wrapShowEditor = $('mt-wrap-show-editor-on-create');
+  const wrapUseDefaultOnDblclick = $('mt-wrap-use-default-on-dblclick');
+  const chkUseDefaultOnDblclick = $('mt-chk-use-default-on-dblclick');
+  const wrapAllowInstanceColor = $('mt-wrap-allow-instance-color');
+  const chkAllowInstanceColor = $('mt-chk-allow-instance-color');
+  const labelColor = $('mt-label-color');
   const delBtn = $('mt-delete-btn');
+  const titleField = inp ? inp.closest('.mt-field') : null;
+  const colorField = $('mt-field-color');
+  const requireCommentWrap = chk ? chk.closest('.mt-checkbox') : null;
+
+  const isDefault = _mtEditingId === '__default__';
+  if(isDefault){
+    titleEl.textContent = 'Настройки типа «Метки»';
+    if(titleField) titleField.style.display = 'none';
+    if(colorField) colorField.style.display = '';
+    if(labelColor) labelColor.textContent = 'Цвет по умолчанию для новых меток';
+    if(wrapAllowInstanceColor) wrapAllowInstanceColor.style.display = 'flex';
+    if(requireCommentWrap) requireCommentWrap.style.display = 'none';
+    if(wrapShowEditor) wrapShowEditor.style.display = 'flex';
+    if(wrapUseDefaultOnDblclick) wrapUseDefaultOnDblclick.style.display = 'flex';
+    delBtn.style.display = 'none';
+    const t = allMarkerTypes.find(x => x.id === '__default__');
+    if(chkShowEditor) chkShowEditor.checked = t ? t.show_editor_on_create !== false : true;
+    if(chkUseDefaultOnDblclick) chkUseDefaultOnDblclick.checked = t ? (t.use_default_point_on_dblclick !== false) : true;
+    if(chkAllowInstanceColor) chkAllowInstanceColor.checked = t ? t.allow_instance_color === true : false;
+    _mtSelectedColor = t && t.color ? t.color : MT_PRESET_COLORS[0];
+  } else {
+    if(titleField) titleField.style.display = '';
+    if(colorField) colorField.style.display = '';
+    if(labelColor) labelColor.textContent = 'Цвет';
+    if(wrapAllowInstanceColor) wrapAllowInstanceColor.style.display = 'none';
+    if(requireCommentWrap) requireCommentWrap.style.display = '';
+    if(wrapShowEditor) wrapShowEditor.style.display = '';
+    if(wrapUseDefaultOnDblclick) wrapUseDefaultOnDblclick.style.display = 'none';
+  }
 
   // Рендерим палитру цветов
   const grid = $('mt-colors-grid');
@@ -7244,34 +7976,40 @@ function openMarkerTypeModal(editId){
     grid.appendChild(btn);
   });
 
-  if(_mtEditingId){
+  if(_mtEditingId && !isDefault){
     const t = allMarkerTypes.find(x => x.id === _mtEditingId);
     if(t){
       titleEl.textContent = 'Редактировать тип';
       inp.value = t.title;
-      _mtSelectedColor = t.color;
+      _mtSelectedColor = t.color || MT_PRESET_COLORS[0];
       chk.checked = t.require_comment;
+      if(chkShowEditor) chkShowEditor.checked = t.show_editor_on_create !== false;
       delBtn.style.display = '';
-      // Обновляем выделение цвета
       grid.querySelectorAll('.mt-color-btn').forEach(b => {
-        b.classList.toggle('selected', b.style.background === t.color ||
-          _rgbToHex(b.style.background) === t.color.toLowerCase());
+        b.classList.toggle('selected', b.style.background === (t.color || '') ||
+          _rgbToHex(b.style.background) === (t.color || '').toLowerCase());
       });
     }
-  } else {
+  } else if(isDefault) {
+    grid.querySelectorAll('.mt-color-btn').forEach(b => {
+      b.classList.toggle('selected', b.style.background === _mtSelectedColor ||
+        _rgbToHex(b.style.background) === (_mtSelectedColor || '').toLowerCase());
+    });
+  } else if(!isDefault) {
     titleEl.textContent = 'Новый тип пометки';
     inp.value = '';
     _mtSelectedColor = MT_PRESET_COLORS[0];
     chk.checked = false;
+    if(chkShowEditor) chkShowEditor.checked = true;
     delBtn.style.display = 'none';
-    // Обновляем выделение цвета
     grid.querySelectorAll('.mt-color-btn').forEach((b, i) => {
       b.classList.toggle('selected', i === 0);
     });
   }
 
   overlay.classList.add('open');
-  setTimeout(() => inp.focus(), 50);
+  if(!isDefault && inp) setTimeout(() => inp.focus(), 50);
+  else if(chkShowEditor) setTimeout(() => chkShowEditor.focus(), 50);
 }
 
 function _rgbToHex(rgb){
@@ -7287,24 +8025,43 @@ function closeMarkerTypeModal(){
 }
 
 async function saveMarkerType(){
+  const isDefault = _mtEditingId === '__default__';
+  if(isDefault){
+    const showEditorOnCreate = $('mt-chk-show-editor-on-create').checked;
+    const color = _mtSelectedColor || MT_PRESET_COLORS[0];
+    const allowInstanceColor = $('mt-chk-allow-instance-color').checked;
+    const useDefaultOnDblclick = $('mt-chk-use-default-on-dblclick').checked;
+    try{
+      await fetch('/api/projects/'+projectId+'/marker_types/__default__', {
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({show_editor_on_create: showEditorOnCreate, color: color, allow_instance_color: allowInstanceColor, use_default_point_on_dblclick: useDefaultOnDblclick})
+      });
+      showToast('Настройки сохранены');
+    } catch(err){ alert('Ошибка: ' + err.message); return; }
+    closeMarkerTypeModal();
+    await loadMarkerTypes();
+    return;
+  }
   const title = $('mt-input-title').value.trim();
   if(!title){ alert('Введите название типа'); return; }
   const color = _mtSelectedColor;
   const requireComment = $('mt-chk-require-comment').checked;
+  const showEditorOnCreate = $('mt-chk-show-editor-on-create').checked;
 
   try{
     if(_mtEditingId){
       await fetch('/api/projects/'+projectId+'/marker_types/'+_mtEditingId, {
         method:'PUT',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({title, color, require_comment: requireComment})
+        body:JSON.stringify({title, color, require_comment: requireComment, show_editor_on_create: showEditorOnCreate})
       });
       showToast('Тип обновлён');
     } else {
       await fetch('/api/projects/'+projectId+'/marker_types', {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({title, color, require_comment: requireComment})
+        body:JSON.stringify({title, color, require_comment: requireComment, show_editor_on_create: showEditorOnCreate})
       });
       showToast('Тип создан');
     }
@@ -7315,7 +8072,7 @@ async function saveMarkerType(){
 }
 
 async function deleteMarkerTypeFromModal(){
-  if(!_mtEditingId) return;
+  if(!_mtEditingId || _mtEditingId === '__default__') return;
   if(!confirm('Удалить тип? Уже созданные пометки этого типа сохранятся.')) return;
   try{
     await fetch('/api/projects/'+projectId+'/marker_types/'+_mtEditingId, {method:'DELETE'});
@@ -7330,31 +8087,240 @@ async function deleteMarkerTypeFromModal(){
 
 function toggleMarkerMode(){
   if(isReadOnly) return;
-  markerMode = !markerMode;
-  const btn = $('btn-add-marker');
-  btn.classList.toggle('active', markerMode);
-  btn.textContent = markerMode ? '📌 Режим пометок…' : '📌 Добавить пометку';
-  const fa = $('frame-area');
-  if(fa) fa.style.cursor = markerMode ? 'crosshair' : '';
+  if(markerMode && !activeMarkerTypeId){
+    // Деактивируем режим точек
+    markerMode = false;
+    const fa = $('frame-area');
+    if(fa && !zoneMode) fa.style.cursor = '';
+  } else {
+    // Активируем режим точек, сбрасываем режим зон и тип зоны
+    markerMode = true;
+    activeMarkerTypeId = null;
+    const fa = $('frame-area');
+    if(fa) fa.style.cursor = 'crosshair';
+    if(zoneMode) _deactivateZoneMode();
+    if(activeZoneTypeId) _clearZoneType();
+  }
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
 }
 
-/* Переключение режима отображения пометок */
+function _deactivateZoneMode(){
+  zoneMode = false;
+  const fa = $('frame-area');
+  if(fa && !markerMode) fa.style.cursor = '';
+  renderZoneTypeChips();
+}
+
+function _deactivateMarkerMode(){
+  markerMode = false;
+  const fa = $('frame-area');
+  if(fa && !zoneMode) fa.style.cursor = '';
+  renderMarkerTypeChips();
+}
+
+function _clearMarkerType(){
+  activeMarkerTypeId = null;
+  renderMarkerTypeChips();
+}
+
+function _clearZoneType(){
+  activeZoneTypeId = null;
+  renderZoneTypeChips();
+}
+
+/** Сброс режима пометок по Escape: отмена рисования/редактирования, снятие выделения; выключить режим пометок, сохранив последний выбранный тип. */
+function resetAnnotationMode(){
+  cancelZonePopup();
+  // 1) Отменить незавершённое рисование зоны
+  if(_zoneDraw !== null){
+    if(_zoneDraw.el && _zoneDraw.el.parentNode) _zoneDraw.el.remove();
+    _zoneDraw = null;
+  }
+  // 2) Отменить drag/resize зоны (onUp при mouseup не будет сохранять)
+  _cancelZoneDragResize = true;
+  _zoneDragging = false;
+  _zoneResizing = false;
+  selectedZoneId = null;
+  selectedCardMarkerId = null;
+  renderZonesForCurrentFrame();
+  // Дефолтные «Точки: Метки» не выключаем по Esc
+  if(markerMode && activeMarkerTypeId === '__default__'){
+    renderMarkerTypeChips();
+    renderZoneTypeChips();
+    updateQuickAnnotationIndicator();
+    return;
+  }
+  // 3) Сохранить текущий выбор как «последний выбранный», затем выключить режим (не сбрасывать на «Метки»)
+  if(zoneMode && activeZoneTypeId){
+    lastUsedPlacementDefined = true;
+    lastSelectedAnnotationKind = 'zones';
+    lastSelectedZoneTypeId = activeZoneTypeId;
+  } else if(markerMode && activeMarkerTypeId){
+    lastUsedPlacementDefined = true;
+    lastSelectedAnnotationKind = 'points';
+    lastSelectedMarkerTypeId = activeMarkerTypeId;
+  }
+  activeZoneTypeId = null;
+  zoneMode = false;
+  activeMarkerTypeId = null;
+  markerMode = false;
+  const fa = $('frame-area');
+  if(fa) fa.style.cursor = '';
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
+  updateQuickAnnotationIndicator();
+}
+
+/** Снять режим постановки зон (без переключения кнопки). Используется при ПКМ по пустому месту. */
+function exitZoneMode(){
+  if(!zoneMode) return;
+  zoneMode = false;
+  const fa = $('frame-area');
+  if(fa && !markerMode) fa.style.cursor = '';
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
+  updateQuickAnnotationIndicator();
+}
+
+/** Единый toggle последнего использованного режима постановки: ПКМ по пустому месту или Ctrl.
+ *  Если режим активен — снять (сохранив last used). Если нет — вернуть последний использованный (если определён). */
+function toggleLastUsedPlacementMode(){
+  // #region agent log
+  const _hasActiveZone = zoneMode && activeZoneTypeId;
+  const _hasActiveMarker = markerMode;
+  const _hasActivePlacement = _hasActiveZone || _hasActiveMarker;
+  fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d1520a'},body:JSON.stringify({sessionId:'d1520a',location:'toggleLastUsedPlacementMode:entry',message:'toggle state',data:{isReadOnly,hasActiveZone:_hasActiveZone,hasActiveMarker:_hasActiveMarker,hasActivePlacement:_hasActivePlacement,lastUsedPlacementDefined,lastSelectedAnnotationKind,lastSelectedZoneTypeId,lastSelectedMarkerTypeId},timestamp:Date.now(),hypothesisId:'H3'})}).catch(()=>{});
+  // #endregion
+  if(isReadOnly) return;
+  const fa = $('frame-area');
+  const hasActiveZone = zoneMode && activeZoneTypeId;
+  const hasActiveMarker = markerMode; // при включённом режиме точек всегда есть тип (default или выбранный)
+  const hasActivePlacement = hasActiveZone || hasActiveMarker;
+
+  if(hasActivePlacement){
+    // Снять текущий режим, сохранить как last used
+    lastUsedPlacementDefined = true;
+    if(hasActiveZone){
+      lastSelectedAnnotationKind = 'zones';
+      lastSelectedZoneTypeId = activeZoneTypeId;
+    } else {
+      lastSelectedAnnotationKind = 'points';
+      lastSelectedMarkerTypeId = activeMarkerTypeId || '__default__';
+    }
+    activeZoneTypeId = null;
+    zoneMode = false;
+    activeMarkerTypeId = null;
+    markerMode = false;
+    if(fa) fa.style.cursor = '';
+  } else if(lastUsedPlacementDefined){
+    // #region agent log
+    fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d1520a'},body:JSON.stringify({sessionId:'d1520a',location:'toggleLastUsedPlacementMode:restore',message:'restore branch',data:{lastSelectedAnnotationKind,lastSelectedZoneTypeId,lastSelectedMarkerTypeId},timestamp:Date.now(),hypothesisId:'H3'})}).catch(()=>{});
+    // #endregion
+    // Вернуть последний использованный режим
+    if(lastSelectedAnnotationKind === 'zones' && lastSelectedZoneTypeId){
+      zoneMode = true;
+      activeZoneTypeId = lastSelectedZoneTypeId;
+      if(markerMode) _deactivateMarkerMode();
+      if(activeMarkerTypeId) _clearMarkerType();
+      if(fa) fa.style.cursor = 'crosshair';
+    } else if(lastSelectedAnnotationKind === 'points' && lastSelectedMarkerTypeId){
+      markerMode = true;
+      activeMarkerTypeId = lastSelectedMarkerTypeId;
+      if(zoneMode) _deactivateZoneMode();
+      if(activeZoneTypeId) _clearZoneType();
+      if(fa) fa.style.cursor = 'crosshair';
+    }
+  }
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
+  updateQuickAnnotationIndicator();
+}
+
+/** Фокус в поле ввода текста — не обрабатывать Ctrl как toggle режима постановки. */
+function isFocusInTextInput(){
+  const ae = document.activeElement;
+  if(!ae) return false;
+  if(ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA') return true;
+  if(ae.isContentEditable) return true;
+  return false;
+}
+
+/** Клик правой кнопкой по пустому месту: не по зоне, не по точке, не по UI. */
+function isRightClickOnEmptySpace(e){
+  if(!e || e.button !== 2) return false;
+  const fa = $('frame-area');
+  if(!fa || !fa.contains(e.target)) return false;
+  const t = e.target;
+  if(t.closest && (t.closest('.zone-rect') || t.closest('.zone-resize-handle'))) return false;
+  if(t.closest && t.closest('.marker-dot')) return false;
+  if(t.closest && (t.closest('button') || t.closest('input') || t.closest('select') || t.closest('a'))) return false;
+  if(t.closest && (t.closest('.marker-popup') || t.closest('.marker-context-menu') || t.closest('.ann-card'))) return false;
+  if(t.closest && (t.closest('.marker-type-chip') || t.closest('.zone-type-chip'))) return false;
+  return true;
+}
+
+/** Диагностика: причина, по которой ПКМ не считается кликом по пустому месту. */
+function _debugWhyNotEmptySpace(e){
+  if(!e || e.button !== 2) return 'notRightClick';
+  const fa = $('frame-area');
+  if(!fa) return 'noFrameArea';
+  if(!fa.contains(e.target)) return 'targetNotInFrameArea';
+  const t = e.target;
+  if(t.closest && t.closest('.zone-rect')) return 'onZoneRect';
+  if(t.closest && t.closest('.zone-resize-handle')) return 'onZoneHandle';
+  if(t.closest && t.closest('.marker-dot')) return 'onMarkerDot';
+  if(t.closest && (t.closest('button') || t.closest('input') || t.closest('select') || t.closest('a'))) return 'onControl';
+  if(t.closest && (t.closest('.marker-popup') || t.closest('.marker-context-menu') || t.closest('.ann-card'))) return 'onPopupOrCard';
+  if(t.closest && (t.closest('.marker-type-chip') || t.closest('.zone-type-chip'))) return 'onChip';
+  return 'empty';
+}
+
+function toggleZoneMode(){
+  if(isReadOnly) return;
+  if(zoneMode && !activeZoneTypeId){
+    // Деактивируем режим зон
+    zoneMode = false;
+    const fa = $('frame-area');
+    if(fa && !markerMode) fa.style.cursor = '';
+    updateQuickAnnotationIndicator();
+  } else {
+    // Активируем режим зон, сбрасываем режим точек и тип точки
+    zoneMode = true;
+    activeZoneTypeId = null;
+    const fa = $('frame-area');
+    if(fa) fa.style.cursor = 'crosshair';
+    if(markerMode) _deactivateMarkerMode();
+    if(activeMarkerTypeId) _clearMarkerType();
+  }
+  renderMarkerTypeChips();
+  renderZoneTypeChips();
+}
+
+/* Переключение режима отображения пометок-точек */
 function onMarkersDisplayModeChange(){
   const chk = $('chk-markers-always');
   markersShowAlways = chk ? chk.checked : false;
   renderMarkersForCurrentFrame();
-  // Сохраняем в metadata проекта
-  _saveMarkersDisplayMode(markersShowAlways);
+  _saveMarkersDisplayMode(markersShowAlways, zonesShowAlways);
 }
 
-async function _saveMarkersDisplayMode(showAlways){
+/* Переключение режима отображения зон */
+function onZonesDisplayModeChange(){
+  const chk = $('chk-zones-always');
+  zonesShowAlways = chk ? chk.checked : false;
+  renderZonesForCurrentFrame();
+  _saveMarkersDisplayMode(markersShowAlways, zonesShowAlways);
+}
+
+async function _saveMarkersDisplayMode(showAlways, zonesAlways){
   const pid = getCurrentProjectId ? getCurrentProjectId() : projectId;
   if(!pid) return;
   try{
     await fetch('/api/projects/'+pid+'/metadata', {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ markers_show_always: !!showAlways })
+      body: JSON.stringify({ markers_show_always: !!showAlways, zones_show_always: !!zonesAlways })
     });
   }catch(e){
     console.warn('[markers] failed to save display mode', e);
@@ -7362,14 +8328,20 @@ async function _saveMarkersDisplayMode(showAlways){
 }
 
 function _restoreMarkersDisplayMode(){
-  // Берём из projectInfo / metadata, если есть
   if(projectInfo && typeof projectInfo.markers_show_always === 'boolean'){
     markersShowAlways = projectInfo.markers_show_always;
   } else {
     markersShowAlways = false;
   }
+  if(projectInfo && typeof projectInfo.zones_show_always === 'boolean'){
+    zonesShowAlways = projectInfo.zones_show_always;
+  } else {
+    zonesShowAlways = false;
+  }
   const chk = $('chk-markers-always');
   if(chk) chk.checked = markersShowAlways;
+  const chkZ = $('chk-zones-always');
+  if(chkZ) chkZ.checked = zonesShowAlways;
 }
 
 /* Нормализованные координаты клика по изображению (0..1) */
@@ -7380,15 +8352,22 @@ function getImageNormCoords(e){
   return { x: Math.max(0, Math.min(1, x)), y: Math.max(0, Math.min(1, y)) };
 }
 
-/* Клик по области кадра: Ctrl+клик или режим markerMode */
+/* Клик по области кадра: только Ctrl+клик создаёт точку (для обратной совместимости) */
+/* Одинарный клик в режимах не создаёт объекты - только двойной клик */
 if(frameArea){
   frameArea.addEventListener('click', e => {
     if(isReadOnly) return;
+    // Одинарный клик не создаёт объекты в режимах точек и зон - только двойной клик
+    // Оставляем только Ctrl+клик для обратной совместимости
+    if(!e.ctrlKey) return;
+    
     // Проверяем, что клик — по изображению или overlay маркеров
     const isOnImage = e.target === frameImg || e.target === markersOverlay;
-    // Не создаём пометку при клике на существующий маркер (у него свой обработчик)
+    // Не создаём пометку при клике на существующий маркер или зону
     if(e.target.classList && (e.target.classList.contains('marker-dot') ||
-       e.target.classList.contains('marker-num'))) return;
+       e.target.classList.contains('marker-num') ||
+       e.target.classList.contains('zone-rect') ||
+       e.target.classList.contains('zone-resize-handle'))) return;
     if(!isOnImage) return;
 
     // Проверяем, что клик внутри границ изображения
@@ -7396,7 +8375,7 @@ if(frameArea){
     if(e.clientX < imgRect.left || e.clientX > imgRect.right ||
        e.clientY < imgRect.top || e.clientY > imgRect.bottom) return;
 
-    if((markerMode || e.ctrlKey) && !_popupJustClosed){
+    if(!_popupJustClosed){
       e.preventDefault();
       e.stopPropagation();
       const coords = getImageNormCoords(e);
@@ -7404,7 +8383,7 @@ if(frameArea){
     }
   });
 
-  // Двойной клик по изображению для создания пометки
+  // Двойной клик по изображению для создания пометки или минимальной зоны
   frameArea.addEventListener('dblclick', e => {
     if(isReadOnly) return;
     
@@ -7412,11 +8391,13 @@ if(frameArea){
     const isOnImage = e.target === frameImg || e.target === markersOverlay;
     if(!isOnImage) return;
 
-    // Не создаём пометку при двойном клике на существующий маркер, попап, карточку или UI-элемент
+    // Не создаём пометку/зону при двойном клике на существующий маркер, зону, попап, карточку или UI-элемент
     if(e.target.classList){
       const targetClasses = e.target.classList;
       if(targetClasses.contains('marker-dot') ||
          targetClasses.contains('marker-num') ||
+         targetClasses.contains('zone-rect') ||
+         targetClasses.contains('zone-resize-handle') ||
          targetClasses.contains('marker-popup') ||
          targetClasses.contains('marker-context-menu') ||
          targetClasses.contains('ann-card') ||
@@ -7444,18 +8425,181 @@ if(frameArea){
     if(e.clientX < imgRect.left || e.clientX > imgRect.right ||
        e.clientY < imgRect.top || e.clientY > imgRect.bottom) return;
 
-    // Создаём пометку (поведение идентично Ctrl+клик)
+    // Двойной клик создаёт объекты только в активном режиме
+    // В режиме зон: двойной клик создаёт зону
+    if(zoneMode){
+      if(!_popupJustClosed){
+        e.preventDefault();
+        e.stopPropagation();
+        const coords = getImageNormCoords(e);
+        // Дефолтная зона по двойному клику — визуально квадрат. В нормализованных координатах (0..1) равные w и h
+        // дают прямоугольник из-за соотношения сторон изображения, поэтому считаем w из условия: w*W = h*H (квадрат в px).
+        const sideNormH = 0.104; // сторона квадрата в долях высоты изображения
+        const aspect = imgRect.height / imgRect.width; // H/W
+        const h = sideNormH;
+        const w = sideNormH * aspect; // так что w*W = h*H — визуально квадрат
+        const x = Math.max(0, Math.min(1 - w, coords.x - w / 2));
+        const y = Math.max(0, Math.min(1 - h, coords.y - h / 2));
+        beginNewZone(x, y, w, h, e.clientX, e.clientY);
+      }
+      return;
+    }
+    
+    // Не в режиме зон: двойной клик создаёт точку ИЛИ (если настроено) активирует последний тип
     if(!_popupJustClosed){
       e.preventDefault();
       e.stopPropagation();
+      // Нет активного типа: при выключенной настройке — активировать последний тип из быстрого доступа вместо постановки точки
+      const noActiveType = !zoneMode && !markerMode;
+      if(noActiveType){
+        const defaultMT = allMarkerTypes.find(t => t.id === '__default__');
+        const useDefaultOnDblclick = defaultMT ? (defaultMT.use_default_point_on_dblclick !== false) : true;
+        if(!useDefaultOnDblclick && lastUsedPlacementDefined){
+          const fa = $('frame-area');
+          const a = getLastSelectedAnnotation();
+          const coords = getImageNormCoords(e);
+          placedDefaultPointByDoubleClick = false;
+          if(a.kind === 'zones'){
+            zoneMode = true;
+            activeZoneTypeId = a.typeId;
+            lastUsedPlacementDefined = true;
+            lastSelectedAnnotationKind = 'zones';
+            lastSelectedZoneTypeId = a.typeId;
+            if(markerMode) _deactivateMarkerMode();
+            if(activeMarkerTypeId) _clearMarkerType();
+            if(fa) fa.style.cursor = 'crosshair';
+            renderMarkerTypeChips();
+            renderZoneTypeChips();
+            updateQuickAnnotationIndicator();
+            // Сразу создать зону по умолчанию в месте двойного клика (как в активном режиме зон)
+            const sideNormH = 0.104;
+            const aspect = imgRect.height / imgRect.width;
+            const h = sideNormH;
+            const w = sideNormH * aspect;
+            const x = Math.max(0, Math.min(1 - w, coords.x - w / 2));
+            const y = Math.max(0, Math.min(1 - h, coords.y - h / 2));
+            beginNewZone(x, y, w, h, e.clientX, e.clientY);
+          } else {
+            markerMode = true;
+            activeMarkerTypeId = a.typeId;
+            lastUsedPlacementDefined = true;
+            lastSelectedAnnotationKind = 'points';
+            lastSelectedMarkerTypeId = a.typeId;
+            if(zoneMode) _deactivateZoneMode();
+            if(activeZoneTypeId) _clearZoneType();
+            if(fa) fa.style.cursor = 'crosshair';
+            renderMarkerTypeChips();
+            renderZoneTypeChips();
+            updateQuickAnnotationIndicator();
+            beginNewMarker(coords.x, coords.y, e.clientX, e.clientY);
+          }
+          return;
+        }
+      }
       const coords = getImageNormCoords(e);
       beginNewMarker(coords.x, coords.y, e.clientX, e.clientY);
     }
   });
+
+  /* ── Zone drawing: mousedown → mousemove → mouseup (with drag threshold) ── */
+  frameArea.addEventListener('mousedown', e => {
+    if(!zoneMode || isReadOnly || e.button !== 0) return;
+    const isOnImage = e.target === frameImg || e.target === markersOverlay;
+    if(!isOnImage) return;
+    
+    const imgRect = frameImg.getBoundingClientRect();
+    if(e.clientX < imgRect.left || e.clientX > imgRect.right ||
+       e.clientY < imgRect.top || e.clientY > imgRect.bottom) return;
+    
+    // Клик по пустому месту при открытом окне редактирования зоны — закрыть окно (как у точек)
+    const zonePopup = $('zone-popup');
+    if(zonePopup && zonePopup.style.display !== 'none'){
+      cancelZonePopup();
+      _popupJustClosed = true;
+      setTimeout(function(){ _popupJustClosed = false; }, 200);
+      return;
+    }
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // FIX H3: drag threshold — не блокируем клик сразу, ждём порог 6px
+    const DRAG_THRESHOLD = 6;
+    const startScreenX = e.clientX;
+    const startScreenY = e.clientY;
+    let dragStarted = false;
+    let preview = null;
+    const startNorm = getImageNormCoords(e);
+    
+    const onMove = ev => {
+      const dx = Math.abs(ev.clientX - startScreenX);
+      const dy = Math.abs(ev.clientY - startScreenY);
+      if(!dragStarted && (dx >= DRAG_THRESHOLD || dy >= DRAG_THRESHOLD)){
+        // Порог превышен — начинаем рисовать зону (цвет из текущего типа зоны)
+        dragStarted = true;
+        preview = document.createElement('div');
+        preview.className = 'zone-draw-preview';
+        const activeZT = getActiveZoneType();
+        const previewColor = (activeZT && activeZT.color) ? activeZT.color : '#3fb950';
+        preview.style.borderColor = previewColor;
+        preview.style.background = _hexToRgba(previewColor, 0.12);
+        preview.style.left = (startNorm.x * 100) + '%';
+        preview.style.top = (startNorm.y * 100) + '%';
+        preview.style.width = '0';
+        preview.style.height = '0';
+        markersOverlay.appendChild(preview);
+        _zoneDraw = { startX: startNorm.x, startY: startNorm.y, el: preview };
+      }
+      if(dragStarted && _zoneDraw){
+        const cur = getImageNormCoords(ev);
+        const x = Math.min(_zoneDraw.startX, cur.x);
+        const y = Math.min(_zoneDraw.startY, cur.y);
+        const w = Math.abs(cur.x - _zoneDraw.startX);
+        const h = Math.abs(cur.y - _zoneDraw.startY);
+        _zoneDraw.el.style.left = (x * 100) + '%';
+        _zoneDraw.el.style.top = (y * 100) + '%';
+        _zoneDraw.el.style.width = (w * 100) + '%';
+        _zoneDraw.el.style.height = (h * 100) + '%';
+      }
+    };
+    
+    const onUp = ev => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      if(!dragStarted || !_zoneDraw){
+        // Не было drag — обычный клик, навигация не заблокирована
+        _zoneDraw = null;
+        return;
+      }
+      const endNorm = getImageNormCoords(ev);
+      const x = Math.min(_zoneDraw.startX, endNorm.x);
+      const y = Math.min(_zoneDraw.startY, endNorm.y);
+      const w = Math.abs(endNorm.x - _zoneDraw.startX);
+      const h = Math.abs(endNorm.y - _zoneDraw.startY);
+      _zoneDraw.el.remove();
+      _zoneDraw = null;
+      
+      // Минимальный размер зоны (чтобы случайный клик не создал зону 0x0)
+      if(w < 0.01 || h < 0.01) return;
+      
+      beginNewZone(x, y, w, h, ev.clientX, ev.clientY);
+    };
+    
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
 }
 
 function beginNewMarker(nx, ny, screenX, screenY){
-  const activeType = getActiveMarkerType();
+  const activeType = getEffectiveMarkerType();
+  // При постановке дефолтной точки показываем «Метки» активными в нижнем блоке, но не перезаписываем быстрый доступ
+  if(activeType && activeType.id === '__default__'){
+    if(activeMarkerTypeId === null) placedDefaultPointByDoubleClick = true; // двойной клик без явного выбора — быстрый доступ не менять
+    markerMode = true;
+    activeMarkerTypeId = '__default__';
+    renderMarkerTypeChips();
+    updateQuickAnnotationIndicator();
+  }
 
   // Создаём временную точку на изображении
   const dot = document.createElement('div');
@@ -7466,11 +8610,12 @@ function beginNewMarker(nx, ny, screenX, screenY){
   markersOverlay.appendChild(dot);
   pendingMarkerDot = dot;
 
-  // Если тип не предоставляет возможность комментария — сохраняем сразу без попапа
-  if(activeType && !activeType.require_comment){
+  // Если отключено «окно комментария при создании» — сохраняем сразу без попапа
+  if(activeType && activeType.show_editor_on_create === false){
     _createMarkerDirect(nx, ny, '', activeType);
     return;
   }
+  // Окно при создании включено: показываем попап (комментарий опционален, если тип не require_comment)
 
   // Открываем попап для ввода комментария (если настройка включена)
   const popup = $('marker-popup');
@@ -7485,27 +8630,29 @@ function beginNewMarker(nx, ny, screenX, screenY){
   checkbox.checked = false;
   editingMarkerId = null;
 
-  // Настройка попапа в зависимости от типа
-  if(activeType){
-    // Пометка с типом: показываем название типа, скрываем поле заголовка
+  // Настройка попапа: дефолтный тип «Метки» — поле названия; пользовательские типы — только тип
+  if(activeType && activeType.id !== '__default__'){
+    // Пометка с пользовательским типом: показываем название типа, скрываем поле заголовка
     typeHeader.textContent = 'Тип: ' + activeType.title;
     typeHeader.style.display = 'block';
     titleWrapper.style.display = 'none';
     showAlwaysLabel.style.display = 'flex';
   } else {
-    // Пометка по умолчанию: показываем поле заголовка, скрываем название типа
+    // Дефолтная точка «Метки»: индивидуальное название для этой пометки (по умолчанию «Метка»)
     typeHeader.style.display = 'none';
     titleWrapper.style.display = 'block';
-    if(titleInput) titleInput.value = 'Метка';
+    if(titleInput){ titleInput.value = 'Метка'; titleInput.placeholder = 'Название (например: Собака, Лёд)'; }
     showAlwaysLabel.style.display = 'flex';
   }
 
-  // Скрываем кнопку «Удалить» в режиме создания
+  // Скрываем кнопку «Удалить» и блок выбора цвета в режиме создания
   const delBtn = $('marker-popup-delete-btn');
   if(delBtn) delBtn.style.display = 'none';
+  const markerColorWrap = $('marker-popup-color-wrapper');
+  if(markerColorWrap) markerColorWrap.style.display = 'none';
 
-  // Сохраняем данные активного типа в popup dataset
-  popup.dataset.activeTypeId = activeType ? activeType.id : '';
+  // Сохраняем данные активного типа в popup dataset (для дефолта передаём __default__)
+  popup.dataset.activeTypeId = (activeType && activeType.id) ? activeType.id : '__default__';
   popup.dataset.allowComment = activeType ? (activeType.require_comment ? '1' : '0') : '0';
 
   // Позиционируем попап рядом с точкой
@@ -7514,7 +8661,8 @@ function beginNewMarker(nx, ny, screenX, screenY){
   popup.dataset.nx = nx;
   popup.dataset.ny = ny;
   popup.dataset.mode = 'create';
-  setTimeout(() => (activeType ? input : titleInput).focus(), 50);
+  const focusOnTitle = activeType && activeType.id === '__default__';
+  setTimeout(() => (focusOnTitle ? titleInput : input).focus(), 50);
 }
 
 /* Создание пометки напрямую (без попапа) — для типов без обязательного комментария */
@@ -7528,13 +8676,18 @@ async function _createMarkerDirect(nx, ny, text, activeType){
       text: text || '',
       pin_show_text_always: false
     };
-    if(activeType){
+    if(activeType && activeType.id !== '__default__'){
       body.type_id = activeType.id;
       body.type_title = activeType.title;
       body.type_color = activeType.color;
     } else {
-      // Для пометки по умолчанию добавляем title
       body.title = 'Метка';
+      const defaultMT = allMarkerTypes.find(x => x.id === '__default__');
+      if(defaultMT){
+        body.type_id = '__default__';
+        body.type_title = 'Метки';
+        body.type_color = defaultMT.color || MT_PRESET_COLORS[0];
+      }
     }
     const r = await fetch('/api/projects/'+projectId+'/markers', {
       method: 'POST',
@@ -7587,8 +8740,7 @@ async function saveMarkerPopup(){
         text: text,
         pin_show_text_always: pinShowAlways
       };
-      // Добавляем тип, если был активен
-      if(typeId){
+      if(typeId && typeId !== '__default__'){
         const t = allMarkerTypes.find(x => x.id === typeId);
         if(t){
           body.type_id = t.id;
@@ -7596,8 +8748,13 @@ async function saveMarkerPopup(){
           body.type_color = t.color;
         }
       } else {
-        // Для пометки по умолчанию добавляем title
         body.title = titleInput ? (titleInput.value.trim() || 'Метка') : 'Метка';
+        const defaultMT = allMarkerTypes.find(x => x.id === '__default__');
+        if(defaultMT){
+          body.type_id = '__default__';
+          body.type_title = 'Метки';
+          body.type_color = defaultMT.color || MT_PRESET_COLORS[0];
+        }
       }
       const r = await fetch('/api/projects/'+projectId+'/markers', {
         method: 'POST',
@@ -7613,9 +8770,12 @@ async function saveMarkerPopup(){
         text: text,
         pin_show_text_always: pinShowAlways
       };
-      // Для пометки без типа обновляем title
-      if(!typeId && titleInput){
+      if((!typeId || typeId === '__default__') && titleInput){
         updateBody.title = titleInput.value.trim() || 'Метка';
+      }
+      const defaultMT = allMarkerTypes.find(x => x.id === '__default__');
+      if((!typeId || typeId === '__default__') && defaultMT && defaultMT.allow_instance_color && _markerPopupSelectedColor){
+        updateBody.color = _markerPopupSelectedColor;
       }
       const r = await fetch('/api/projects/'+projectId+'/markers/'+editingMarkerId, {
         method: 'PUT',
@@ -7670,6 +8830,9 @@ async function loadMarkers(){
   allMarkers.forEach(m => {
     annotatedFrames.add(m.frame_index);
   });
+  allZones.forEach(z => {
+    annotatedFrames.add(z.frame_index);
+  });
   updateTimelineMarkers();
   updateAnnList();
 }
@@ -7696,7 +8859,8 @@ function _shouldShowTitleAlways(marker){
 
 /* Отрисовка маркеров текущего кадра */
 function renderMarkersForCurrentFrame(){
-  markersOverlay.innerHTML = '';
+  // Удаляем только точки (зоны рендерятся отдельно)
+  markersOverlay.querySelectorAll('.marker-dot').forEach(el => el.remove());
   const vm = (typeof viewMode !== 'undefined') ? viewMode : 'original';
   const frameMarkers = allMarkers.filter(m =>
     m.frame_index === currentFrame && m.view_mode === vm
@@ -7708,26 +8872,25 @@ function renderMarkersForCurrentFrame(){
     dot.style.top = (m.y * 100) + '%';
     dot.dataset.id = m.id;
 
-    // Цвет точки по типу пометки
-    if(m.type_color) dot.style.background = m.type_color;
+    const mColor = getMarkerDisplayColor(m);
+    if(mColor) dot.style.background = mColor;
 
     const num = document.createElement('span');
     num.className = 'marker-num';
     num.textContent = (i + 1);
     dot.appendChild(num);
 
-    // Определяем, есть ли у пометки тип
-    const hasType = m.type_id || m.type_title;
+    // Дефолтная пометка (нет type_id или __default__) — индивидуальное название; иначе — тип
+    const hasType = m.type_id && m.type_id !== '__default__';
     const rawComment = (m.text || '').trim();
     
     if(hasType){
-      // Пометка с типом
+      // Пометка с пользовательским типом
       const typeLabel = m.type_title || '(тип удалён)';
       
-      // Бейдж типа всегда показываем как короткую метку
       const typeBadge = document.createElement('span');
       typeBadge.className = 'marker-type-badge';
-      typeBadge.style.background = m.type_color || 'rgba(0,0,0,.7)';
+      typeBadge.style.background = mColor || 'rgba(0,0,0,.7)';
       typeBadge.textContent = typeLabel;
       dot.appendChild(typeBadge);
       
@@ -7749,13 +8912,13 @@ function renderMarkersForCurrentFrame(){
         dot.title = '';
       }
     } else {
-      // Пометка по умолчанию (без типа)
-      const title = m.title || 'Метка';
+      // Дефолтная «Метки»: индивидуальное название
+      const title = (m.title || '').trim() || 'Метка';
       
       // Бейдж с заголовком (title) - всегда показываем как короткую метку
       const typeBadge = document.createElement('span');
       typeBadge.className = 'marker-type-badge';
-      typeBadge.style.background = m.type_color || 'rgba(0,0,0,.7)';
+      typeBadge.style.background = mColor || 'rgba(0,0,0,.7)';
       typeBadge.textContent = title;
       dot.appendChild(typeBadge);
       
@@ -7940,7 +9103,10 @@ document.addEventListener('mousedown', e => {
 /* ── Удаление маркера ── */
 function requestDeleteMarker(mid, screenX, screenY){
   pendingDeleteMarkerId = mid;
+  pendingDeleteZoneId = null;
   const popup = $('marker-confirm-popup');
+  const msg = popup.querySelector('p');
+  if(msg) msg.textContent = 'Удалить пометку?';
   popup.style.display = 'block';
   // Центрируем
   const pw = popup.offsetWidth || 200;
@@ -7953,11 +9119,45 @@ function requestDeleteMarker(mid, screenX, screenY){
   if(top < 0) top = 10;
   popup.style.left = left + 'px';
   popup.style.top = top + 'px';
+  popup.focus();
+}
+
+function _closeDeleteConfirmAndEditPopups(){
+  const confirmPop = document.getElementById('marker-confirm-popup');
+  const markerPop = document.getElementById('marker-popup');
+  const zonePop = document.getElementById('zone-popup');
+  if(confirmPop) confirmPop.style.display = 'none';
+  if(markerPop) markerPop.style.display = 'none';
+  if(zonePop) zonePop.style.display = 'none';
+  editingMarkerId = null;
+  editingZoneId = null;
 }
 
 async function confirmDeleteMarker(yes){
-  const popup = $('marker-confirm-popup');
-  popup.style.display = 'none';
+  _closeDeleteConfirmAndEditPopups();
+
+  // Удаление зоны
+  if(pendingDeleteZoneId){
+    const zid = pendingDeleteZoneId;
+    pendingDeleteZoneId = null;
+    if(!yes) return;
+    try{
+      const r = await fetch('/api/projects/'+projectId+'/zones/'+zid, {method:'DELETE'});
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      showToast('Зона удалена');
+    }catch(e){
+      alert('Ошибка удаления: '+e.message);
+      return;
+    }
+    if(selectedZoneId === zid) selectedZoneId = null;
+    await loadZones();
+    renderZonesForCurrentFrame();
+    updateAnnList();
+    _closeDeleteConfirmAndEditPopups();
+    return;
+  }
+
+  // Удаление точки
   if(!yes || !pendingDeleteMarkerId) { pendingDeleteMarkerId = null; return; }
   const mid = pendingDeleteMarkerId;
   pendingDeleteMarkerId = null;
@@ -7973,7 +9173,27 @@ async function confirmDeleteMarker(yes){
   await loadMarkers();
   renderMarkersForCurrentFrame();
   updateAnnList();
+  _closeDeleteConfirmAndEditPopups();
 }
+
+/* ── Keyboard shortcuts for delete confirmation dialog ── */
+document.addEventListener('keydown', e => {
+  const popup = $('marker-confirm-popup');
+  if(!popup || popup.style.display === 'none') return;
+  
+  // Enter = "Да" (удалить)
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    e.stopPropagation();
+    confirmDeleteMarker(true);
+  }
+  // Escape = "Нет" (отмена)
+  if(e.key === 'Escape'){
+    e.preventDefault();
+    e.stopPropagation();
+    confirmDeleteMarker(false);
+  }
+});
 
 /* ── Display mode per marker ── */
 async function _setMarkerDisplayMode(mid, mode){
@@ -8001,6 +9221,8 @@ function _cycleMarkerDisplayMode(mid){
   _setMarkerDisplayMode(mid, next);
 }
 
+let _markerPopupSelectedColor = null; // цвет, выбранный в попапе редактирования пометки
+
 function openMarkerForEdit(marker, sx, sy){
   const popup = $('marker-popup');
   const input = $('marker-comment-input');
@@ -8009,36 +9231,59 @@ function openMarkerForEdit(marker, sx, sy){
   const typeHeader = $('marker-popup-type-header');
   const titleWrapper = $('marker-popup-title-wrapper');
   const showAlwaysLabel = $('marker-popup-show-always-label');
+  const colorWrapper = $('marker-popup-color-wrapper');
+  const colorGrid = $('marker-popup-colors-grid');
   
   input.value = marker.text || '';
   checkbox.checked = marker.pin_show_text_always === true;
   editingMarkerId = marker.id;
   popup.dataset.mode = 'edit';
   
-  // Настройка попапа в зависимости от типа
-  const hasType = marker.type_id || marker.type_title;
-  if(hasType){
-    // Пометка с типом: показываем название типа, скрываем поле заголовка
+  const isDefaultMarker = !marker.type_id || marker.type_id === '__default__';
+  const defaultType = allMarkerTypes.find(x => x.id === '__default__');
+  const showColorBlock = isDefaultMarker && defaultType && defaultType.allow_instance_color === true;
+  
+  if(colorWrapper){
+    if(showColorBlock && colorGrid){
+      _markerPopupSelectedColor = marker.color || marker.type_color || (defaultType && defaultType.color) || MT_PRESET_COLORS[0];
+      colorGrid.innerHTML = '';
+      MT_PRESET_COLORS.forEach(c => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-color-btn' + ((_markerPopupSelectedColor && (c === _markerPopupSelectedColor || (c && _markerPopupSelectedColor && c.toLowerCase() === _markerPopupSelectedColor.toLowerCase()))) ? ' selected' : '');
+        btn.style.background = c;
+        btn.onclick = () => {
+          _markerPopupSelectedColor = c;
+          colorGrid.querySelectorAll('.mt-color-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+        colorGrid.appendChild(btn);
+      });
+      colorWrapper.style.display = 'block';
+    } else {
+      colorWrapper.style.display = 'none';
+    }
+  }
+  
+  if(!isDefaultMarker){
     typeHeader.textContent = 'Тип: ' + (marker.type_title || '(тип удалён)');
     typeHeader.style.display = 'block';
     titleWrapper.style.display = 'none';
     showAlwaysLabel.style.display = 'flex';
     popup.dataset.activeTypeId = marker.type_id || '';
   } else {
-    // Пометка по умолчанию: показываем поле заголовка, скрываем название типа
     typeHeader.style.display = 'none';
     titleWrapper.style.display = 'block';
-    if(titleInput) titleInput.value = marker.title || 'Метка';
+    if(titleInput){ titleInput.value = marker.title || ''; titleInput.placeholder = 'Название (например: Собака, Лёд)'; }
     showAlwaysLabel.style.display = 'flex';
-    popup.dataset.activeTypeId = '';
+    popup.dataset.activeTypeId = '__default__';
   }
   
-  // Показываем кнопку «Удалить» в режиме редактирования
   const delBtn = $('marker-popup-delete-btn');
   if(delBtn) delBtn.style.display = '';
   positionPopup(popup, sx, sy);
   popup.style.display = 'block';
-  setTimeout(() => (hasType ? input : titleInput).focus(), 50);
+  setTimeout(() => (isDefaultMarker ? titleInput : input).focus(), 50);
 }
 
 /* Лента карточек пометок — горизонтальный скролл */
@@ -8049,8 +9294,10 @@ function updateAnnList(){
 
   scroll.innerHTML = '';
 
+  const totalCount = allMarkers.length + allZones.length;
+
   /* Пустое состояние */
-  if(allMarkers.length === 0){
+  if(totalCount === 0){
     section.classList.add('empty-state');
     const msg = document.createElement('div');
     msg.className = 'ann-cards-empty';
@@ -8061,7 +9308,7 @@ function updateAnnList(){
 
   section.classList.remove('empty-state');
 
-  /* Генерируем карточки */
+  /* Генерируем карточки точек */
   allMarkers.forEach((m, idx) => {
     const card = document.createElement('div');
     card.className = 'ann-card';
@@ -8077,13 +9324,13 @@ function updateAnnList(){
       card.classList.add('selected');
     }
 
-    /* Цветная полоска типа (левая) */
-    if(m.type_color){
+    const mCardColor = getMarkerDisplayColor(m);
+    if(mCardColor){
       const stripe = document.createElement('div');
       stripe.className = 'ann-card-type-stripe';
-      stripe.style.background = m.type_color;
+      stripe.style.background = mCardColor;
       card.appendChild(stripe);
-      card.style.paddingLeft = '10px'; // чуть сдвигаем контент вправо
+      card.style.paddingLeft = '10px';
     }
 
     /* Кнопка удаления (крестик) */
@@ -8117,20 +9364,19 @@ function updateAnnList(){
     frameLine.textContent = 'Кадр: ' + m.frame_index;
     card.appendChild(frameLine);
 
-    /* Тип пометки */
-    const hasType = m.type_id || m.type_title;
+    /* Тип / название пометки */
+    const hasCustomType = m.type_id && m.type_id !== '__default__';
     let cardTypeTitle;
-    if(hasType){
+    if(hasCustomType){
       cardTypeTitle = m.type_title || '(тип удалён)';
     } else {
-      // Для пометки по умолчанию используем title
-      cardTypeTitle = m.title || 'Метка';
+      cardTypeTitle = (m.title || '').trim() || 'Метка';
     }
     if(cardTypeTitle){
       const typeLabel = document.createElement('div');
       typeLabel.className = 'ann-card-type-label';
       typeLabel.textContent = cardTypeTitle;
-      typeLabel.style.color = m.type_color || 'var(--muted)';
+      typeLabel.style.color = mCardColor || 'var(--muted)';
       card.appendChild(typeLabel);
     }
 
@@ -8167,6 +9413,85 @@ function updateAnnList(){
     scroll.appendChild(card);
   });
 
+  /* Генерируем карточки зон */
+  allZones.forEach((z, idx) => {
+    const card = document.createElement('div');
+    card.className = 'ann-card';
+    card.dataset.zoneId = z.id;
+    card.dataset.frameIdx = String(z.frame_index);
+
+    if(z.frame_index === currentFrame) card.classList.add('on-frame');
+    if(selectedZoneId && z.id === selectedZoneId) card.classList.add('selected');
+
+    const zCardColor = getZoneDisplayColor(z);
+    const stripe = document.createElement('div');
+    stripe.className = 'ann-card-type-stripe';
+    stripe.style.background = zCardColor;
+    card.appendChild(stripe);
+    card.style.paddingLeft = '10px';
+
+    /* Кнопка удаления */
+    const btnDel = document.createElement('button');
+    btnDel.className = 'ann-card-delete';
+    btnDel.textContent = '✕';
+    btnDel.title = 'Удалить зону';
+    btnDel.onclick = e => { e.stopPropagation(); requestDeleteZone(z.id, e.clientX, e.clientY); };
+    card.appendChild(btnDel);
+
+    /* Заголовок */
+    const title = document.createElement('div');
+    title.className = 'ann-card-title';
+    title.textContent = '🔲 З' + (idx + 1);
+    card.appendChild(title);
+
+    /* Кадр */
+    const frameLine = document.createElement('div');
+    frameLine.className = 'ann-card-frame';
+    frameLine.textContent = 'Кадр: ' + z.frame_index;
+    card.appendChild(frameLine);
+
+    /* Тип зоны */
+    const hasType = z.type_id || z.type_title;
+    let cardTypeTitle;
+    if(hasType){
+      cardTypeTitle = z.type_title || '(тип удалён)';
+    } else {
+      cardTypeTitle = z.title || 'Зона';
+    }
+    if(cardTypeTitle){
+      const typeLabel = document.createElement('div');
+      typeLabel.className = 'ann-card-type-label';
+      typeLabel.textContent = cardTypeTitle;
+      typeLabel.style.color = zCardColor;
+      card.appendChild(typeLabel);
+    }
+
+    /* Превью текста */
+    const rawText = (z.text || '').trim();
+    if(rawText){
+      const preview = document.createElement('div');
+      preview.className = 'ann-card-preview';
+      preview.textContent = rawText.length > 20 ? rawText.slice(0, 20) + '…' : rawText;
+      card.appendChild(preview);
+      const tip = document.createElement('div');
+      tip.className = 'ann-card-tooltip';
+      tip.textContent = rawText;
+      card.appendChild(tip);
+    }
+
+    /* Клик → навигация на кадр + выбор зоны */
+    card.onclick = () => {
+      selectedZoneId = z.id;
+      goToFrame(z.frame_index);
+      setTimeout(() => {
+        renderZonesForCurrentFrame();
+        updateAnnList();
+      }, 50);
+    };
+
+    scroll.appendChild(card);
+  });
+
   /* Прокрутка к выбранной / активной карточке */
   _scrollToActiveCard();
 }
@@ -8192,6 +9517,815 @@ document.addEventListener('DOMContentLoaded', () => {
       scroll.scrollLeft += e.deltaY || e.deltaX;
     }
   }, {passive: false});
+});
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ZONES — полная реализация (CRUD, рендер, drag, resize, popup, types)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Load / save zones ── */
+async function loadZones(){
+  if(!projectId) return;
+  try{
+    const r = await fetch('/api/projects/'+projectId+'/zones');
+    const d = await r.json();
+    allZones = d.zones || [];
+  } catch(e){
+    allZones = [];
+  }
+  // Обновляем annotatedFrames (зоны тоже считаются)
+  allZones.forEach(z => annotatedFrames.add(z.frame_index));
+  updateTimelineMarkers();
+}
+
+/* ── Load / render zone types ── */
+async function loadZoneTypes(){
+  if(!projectId) return;
+  try{
+    const r = await fetch('/api/projects/'+projectId+'/zone_types');
+    const d = await r.json();
+    allZoneTypes = d.zone_types || [];
+  } catch(e){
+    allZoneTypes = [];
+  }
+  renderZoneTypeChips();
+}
+
+function renderZoneTypeChips(){
+  const container = $('zone-types-chips');
+  if(!container) return;
+  container.innerHTML = '';
+
+  allZoneTypes.forEach(t => {
+    const isDefault = t.id === '__default__';
+    const isActive = isDefault ? (zoneMode && (!activeZoneTypeId || activeZoneTypeId === '__default__')) : (activeZoneTypeId === t.id);
+    const chip = document.createElement('span');
+    chip.className = 'marker-type-chip' + (isActive ? ' active' : '');
+    chip.style.background = t.color || '#3fb950';
+    chip.dataset.typeId = t.id;
+    chip.title = (isDefault ? 'Зоны (тип по умолчанию)' : t.title) + (t.require_comment ? ' (можно оставить комментарий)' : '');
+    if(isReadOnly && isDefault) chip.style.opacity = '0.5';
+
+    const dot = document.createElement('span');
+    dot.className = 'chip-color-dot';
+    dot.style.background = '#fff';
+    chip.appendChild(dot);
+
+    const label = document.createTextNode(isDefault ? 'Зоны' : t.title);
+    chip.appendChild(label);
+
+    const gear = document.createElement('span');
+    gear.className = 'chip-gear';
+    gear.textContent = '⚙';
+    gear.addEventListener('click', e => {
+      e.stopPropagation();
+      openZoneTypeModal(t.id);
+    });
+    chip.appendChild(gear);
+
+    if(!isReadOnly){
+      chip.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        openZoneTypeModal(t.id);
+      });
+      chip.addEventListener('click', e => {
+        if(e.target.classList.contains('chip-gear')) return;
+        const currentlyActive = isDefault ? (zoneMode && (!activeZoneTypeId || activeZoneTypeId === '__default__')) : (activeZoneTypeId === t.id);
+        if(currentlyActive){
+          activeZoneTypeId = null;
+          zoneMode = false;
+          const fa = $('frame-area');
+          if(fa && !markerMode) fa.style.cursor = '';
+        } else {
+          placedDefaultPointByDoubleClick = false;
+          lastUsedPlacementDefined = true;
+          lastSelectedAnnotationKind = 'zones';
+          lastSelectedZoneTypeId = t.id;
+          activeZoneTypeId = t.id;
+          zoneMode = true;
+          const fa = $('frame-area');
+          if(fa) fa.style.cursor = 'crosshair';
+          if(markerMode) _deactivateMarkerMode();
+          if(activeMarkerTypeId) _clearMarkerType();
+        }
+        renderMarkerTypeChips();
+        renderZoneTypeChips();
+        updateQuickAnnotationIndicator();
+      });
+    }
+
+    container.appendChild(chip);
+  });
+  updateZoneTypeStatus();
+  updateQuickAnnotationIndicator();
+}
+
+function updateZoneTypeStatus(){
+  const statusEl = $('zone-types-status');
+  if(!statusEl) return;
+  const activeType = getActiveZoneType();
+  if(activeType){
+    statusEl.textContent = 'Выбран: ' + (activeType.id === '__default__' ? 'Зоны' : activeType.title);
+  } else {
+    statusEl.textContent = 'Выбран: нет';
+  }
+}
+
+function getActiveZoneType(){
+  if(activeZoneTypeId) return allZoneTypes.find(t => t.id === activeZoneTypeId) || null;
+  if(zoneMode) return allZoneTypes.find(t => t.id === '__default__') || null;
+  return null;
+}
+
+/* ── Zone type modal ── */
+function openZoneTypeModal(editId){
+  _ztEditingId = editId || null;
+  const overlay = $('zt-modal-overlay');
+  const titleEl = $('zt-modal-title');
+  const inp = $('zt-input-title');
+  const chk = $('zt-chk-require-comment');
+  const chkShowEditor = $('zt-chk-show-editor-on-create');
+  const wrapShowEditor = $('zt-wrap-show-editor-on-create');
+  const wrapAllowInstanceColor = $('zt-wrap-allow-instance-color');
+  const chkAllowInstanceColor = $('zt-chk-allow-instance-color');
+  const labelColor = $('zt-label-color');
+  const delBtn = $('zt-delete-btn');
+  const titleField = inp ? inp.closest('.mt-field') : null;
+  const colorField = $('zt-field-color');
+  const requireCommentWrap = chk ? chk.closest('.mt-checkbox') : null;
+
+  const isDefault = _ztEditingId === '__default__';
+  if(isDefault){
+    titleEl.textContent = 'Настройки типа «Зоны»';
+    if(titleField) titleField.style.display = 'none';
+    if(colorField) colorField.style.display = '';
+    if(labelColor) labelColor.textContent = 'Цвет по умолчанию для новых зон';
+    if(wrapAllowInstanceColor) wrapAllowInstanceColor.style.display = 'flex';
+    if(requireCommentWrap) requireCommentWrap.style.display = 'none';
+    if(wrapShowEditor) wrapShowEditor.style.display = 'flex';
+    delBtn.style.display = 'none';
+    const t = allZoneTypes.find(x => x.id === '__default__');
+    if(chkShowEditor) chkShowEditor.checked = t ? t.show_editor_on_create !== false : true;
+    if(chkAllowInstanceColor) chkAllowInstanceColor.checked = t ? t.allow_instance_color === true : false;
+    _ztSelectedColor = t && t.color ? t.color : MT_PRESET_COLORS[0];
+  } else {
+    if(titleField) titleField.style.display = '';
+    if(colorField) colorField.style.display = '';
+    if(labelColor) labelColor.textContent = 'Цвет';
+    if(wrapAllowInstanceColor) wrapAllowInstanceColor.style.display = 'none';
+    if(requireCommentWrap) requireCommentWrap.style.display = '';
+    if(wrapShowEditor) wrapShowEditor.style.display = '';
+  }
+
+  const grid = $('zt-colors-grid');
+  grid.innerHTML = '';
+  MT_PRESET_COLORS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'mt-color-btn' + (_ztSelectedColor === c ? ' selected' : '');
+    btn.style.background = c;
+    btn.onclick = () => {
+      _ztSelectedColor = c;
+      grid.querySelectorAll('.mt-color-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    };
+    grid.appendChild(btn);
+  });
+
+  if(_ztEditingId && !isDefault){
+    const t = allZoneTypes.find(x => x.id === _ztEditingId);
+    if(t){
+      titleEl.textContent = 'Редактировать тип зоны';
+      inp.value = t.title;
+      _ztSelectedColor = t.color || MT_PRESET_COLORS[0];
+      chk.checked = t.require_comment;
+      if(chkShowEditor) chkShowEditor.checked = t.show_editor_on_create !== false;
+      delBtn.style.display = '';
+      grid.querySelectorAll('.mt-color-btn').forEach(b => {
+        b.classList.toggle('selected', b.style.background === (t.color || '') ||
+          _rgbToHex(b.style.background) === (t.color || '').toLowerCase());
+      });
+    }
+  } else if(isDefault) {
+    grid.querySelectorAll('.mt-color-btn').forEach(b => {
+      b.classList.toggle('selected', b.style.background === _ztSelectedColor ||
+        _rgbToHex(b.style.background) === (_ztSelectedColor || '').toLowerCase());
+    });
+  } else if(!isDefault) {
+    titleEl.textContent = 'Новый тип зоны';
+    inp.value = '';
+    _ztSelectedColor = MT_PRESET_COLORS[0];
+    chk.checked = false;
+    if(chkShowEditor) chkShowEditor.checked = true;
+    delBtn.style.display = 'none';
+    grid.querySelectorAll('.mt-color-btn').forEach((b, i) => {
+      b.classList.toggle('selected', i === 0);
+    });
+  }
+
+  overlay.classList.add('open');
+  if(!isDefault && inp) setTimeout(() => inp.focus(), 50);
+  else if(chkShowEditor) setTimeout(() => chkShowEditor.focus(), 50);
+}
+
+function closeZoneTypeModal(){
+  $('zt-modal-overlay').classList.remove('open');
+  _ztEditingId = null;
+}
+
+async function saveZoneType(){
+  const isDefault = _ztEditingId === '__default__';
+  if(isDefault){
+    const showEditorOnCreate = $('zt-chk-show-editor-on-create').checked;
+    const color = _ztSelectedColor || MT_PRESET_COLORS[0];
+    const allowInstanceColor = $('zt-chk-allow-instance-color').checked;
+    try{
+      await fetch('/api/projects/'+projectId+'/zone_types/__default__', {
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({show_editor_on_create: showEditorOnCreate, color: color, allow_instance_color: allowInstanceColor})
+      });
+      showToast('Настройки сохранены');
+    } catch(err){ alert('Ошибка: ' + err.message); return; }
+    closeZoneTypeModal();
+    await loadZoneTypes();
+    return;
+  }
+  const title = $('zt-input-title').value.trim();
+  if(!title){ alert('Введите название типа'); return; }
+  const color = _ztSelectedColor;
+  const requireComment = $('zt-chk-require-comment').checked;
+  const showEditorOnCreate = $('zt-chk-show-editor-on-create').checked;
+
+  try{
+    if(_ztEditingId){
+      await fetch('/api/projects/'+projectId+'/zone_types/'+_ztEditingId, {
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({title, color, require_comment: requireComment, show_editor_on_create: showEditorOnCreate})
+      });
+      showToast('Тип зоны обновлён');
+    } else {
+      await fetch('/api/projects/'+projectId+'/zone_types', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({title, color, require_comment: requireComment, show_editor_on_create: showEditorOnCreate})
+      });
+      showToast('Тип зоны создан');
+    }
+  } catch(err){ alert('Ошибка: ' + err.message); return; }
+
+  closeZoneTypeModal();
+  await loadZoneTypes();
+}
+
+async function deleteZoneTypeFromModal(){
+  if(!_ztEditingId || _ztEditingId === '__default__') return;
+  if(!confirm('Удалить тип зоны? Уже созданные зоны этого типа сохранятся.')) return;
+  try{
+    await fetch('/api/projects/'+projectId+'/zone_types/'+_ztEditingId, {method:'DELETE'});
+    if(activeZoneTypeId === _ztEditingId) activeZoneTypeId = null;
+    showToast('Тип зоны удалён');
+  } catch(err){ alert('Ошибка: ' + err.message); }
+  closeZoneTypeModal();
+  await loadZoneTypes();
+}
+
+/* ── Begin new zone (after draw): зона создаётся сразу, попап — только редактирование ── */
+async function beginNewZone(nx, ny, nw, nh, screenX, screenY){
+  const activeType = getActiveZoneType();
+
+  // Всегда создаём зону сразу с дефолтными значениями (название «Зона», пустой комментарий)
+  const createdZone = await _createZoneDirect(nx, ny, nw, nh, '', activeType);
+  if(!createdZone) return;
+
+  // Если отключено окно редактирования при создании — только показать тост, попап не открываем
+  if(activeType && activeType.show_editor_on_create === false){
+    showToast('Зона создана');
+    return;
+  }
+
+  // Окно редактирования включено: открываем попап уже для существующей зоны (режим edit)
+  openZoneForEdit(createdZone, screenX, screenY);
+}
+
+/** Создаёт зону на сервере с дефолтными значениями. Возвращает созданную зону или null при ошибке. */
+async function _createZoneDirect(nx, ny, nw, nh, text, activeType){
+  try{
+    const body = {
+      frame_index: currentFrame,
+      generation_id: currentGenerationId,
+      view_mode: (typeof viewMode !== 'undefined') ? viewMode : 'original',
+      x: nx, y: ny, w: nw, h: nh,
+      text: text || '',
+      pin_show_text_always: false
+    };
+    if(activeType && activeType.id !== '__default__'){
+      body.type_id = activeType.id;
+      body.type_title = activeType.title;
+      body.type_color = activeType.color;
+    } else {
+      body.title = 'Зона';
+      const defaultZT = allZoneTypes.find(x => x.id === '__default__');
+      if(defaultZT){
+        body.type_id = '__default__';
+        body.type_title = 'Зоны';
+        body.type_color = defaultZT.color || MT_PRESET_COLORS[0];
+      }
+    }
+    const r = await fetch('/api/projects/'+projectId+'/zones', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const createdZone = await r.json();
+    await loadZones();
+    renderZonesForCurrentFrame();
+    updateAnnList();
+    return createdZone;
+  } catch(err){ alert('Ошибка сохранения: ' + err.message); return null; }
+}
+
+/* ── Zone popup save / cancel / delete (попап только для редактирования уже созданной зоны) ── */
+async function saveZonePopup(){
+  const popup = $('zone-popup');
+  const text = $('zone-comment-input').value.trim();
+  const titleInput = $('zone-popup-title-input');
+  const checkbox = $('zone-popup-show-always');
+  const pinShowAlways = checkbox.checked;
+  const typeId = popup.dataset.activeTypeId;
+
+  if(editingZoneId){
+    try{
+      const updateBody = {
+        text: text,
+        pin_show_text_always: pinShowAlways
+      };
+      if((!typeId || typeId === '__default__') && titleInput){
+        updateBody.title = titleInput.value.trim() || 'Зона';
+      }
+      const defaultZT = allZoneTypes.find(x => x.id === '__default__');
+      if((!typeId || typeId === '__default__') && defaultZT && defaultZT.allow_instance_color && _zonePopupSelectedColor){
+        updateBody.color = _zonePopupSelectedColor;
+      }
+      const r = await fetch('/api/projects/'+projectId+'/zones/'+editingZoneId, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(updateBody)
+      });
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      showToast('Зона обновлена');
+    } catch(err){ alert('Ошибка обновления: ' + err.message); }
+  }
+
+  popup.style.display = 'none';
+  editingZoneId = null;
+  await loadZones();
+  renderZonesForCurrentFrame();
+  updateAnnList();
+}
+
+function cancelZonePopup(){
+  const popup = $('zone-popup');
+  popup.style.display = 'none';
+  editingZoneId = null;
+}
+
+function deleteZoneFromPopup(){
+  if(!editingZoneId) return;
+  const zid = editingZoneId;
+  cancelZonePopup();
+  requestDeleteZone(zid);
+}
+
+function requestDeleteZone(zid, screenX, screenY){
+  // Запрещаем удаление во время drag и resize
+  if(_zoneDragging || _zoneResizing) return;
+  pendingDeleteZoneId = zid;
+  pendingDeleteMarkerId = null;
+  const popup = $('marker-confirm-popup');
+  const msg = popup.querySelector('p');
+  if(msg) msg.textContent = 'Удалить зону?';
+  popup.style.display = 'block';
+  const pw = popup.offsetWidth || 200;
+  const ph = popup.offsetHeight || 80;
+  let left = (screenX != null) ? screenX : (window.innerWidth - pw) / 2;
+  let top = (screenY != null) ? screenY : (window.innerHeight - ph) / 2;
+  if(left + pw > window.innerWidth) left = window.innerWidth - pw - 10;
+  if(top + ph > window.innerHeight) top = window.innerHeight - ph - 10;
+  if(left < 0) left = 10;
+  if(top < 0) top = 10;
+  popup.style.left = left + 'px';
+  popup.style.top = top + 'px';
+  popup.focus();
+}
+
+let _zonePopupSelectedColor = null;
+
+function openZoneForEdit(zone, sx, sy){
+  if(editingZoneId !== null && editingZoneId !== zone.id){
+    cancelZonePopup();
+  }
+  const popup = $('zone-popup');
+  const input = $('zone-comment-input');
+  const titleInput = $('zone-popup-title-input');
+  const checkbox = $('zone-popup-show-always');
+  const typeHeader = $('zone-popup-type-header');
+  const titleWrapper = $('zone-popup-title-wrapper');
+  const showAlwaysLabel = $('zone-popup-show-always-label');
+  const colorWrapper = $('zone-popup-color-wrapper');
+  const colorGrid = $('zone-popup-colors-grid');
+
+  input.value = zone.text || '';
+  checkbox.checked = zone.pin_show_text_always === true;
+  editingZoneId = zone.id;
+  popup.dataset.mode = 'edit';
+
+  const isDefaultZone = !zone.type_id || zone.type_id === '__default__';
+  const defaultZT = allZoneTypes.find(x => x.id === '__default__');
+  const showColorBlock = isDefaultZone && defaultZT && defaultZT.allow_instance_color === true;
+
+  if(colorWrapper){
+    if(showColorBlock && colorGrid){
+      _zonePopupSelectedColor = zone.color || zone.type_color || (defaultZT && defaultZT.color) || MT_PRESET_COLORS[0];
+      colorGrid.innerHTML = '';
+      MT_PRESET_COLORS.forEach(c => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'mt-color-btn' + ((_zonePopupSelectedColor && (c === _zonePopupSelectedColor || (c && _zonePopupSelectedColor && c.toLowerCase() === _zonePopupSelectedColor.toLowerCase()))) ? ' selected' : '');
+        btn.style.background = c;
+        btn.onclick = () => {
+          _zonePopupSelectedColor = c;
+          colorGrid.querySelectorAll('.mt-color-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+        colorGrid.appendChild(btn);
+      });
+      colorWrapper.style.display = 'block';
+    } else {
+      colorWrapper.style.display = 'none';
+    }
+  }
+
+  if(!isDefaultZone){
+    typeHeader.textContent = 'Тип: ' + (zone.type_title || '(тип удалён)');
+    typeHeader.style.display = 'block';
+    titleWrapper.style.display = 'none';
+    showAlwaysLabel.style.display = 'flex';
+    popup.dataset.activeTypeId = zone.type_id || '';
+  } else {
+    typeHeader.style.display = 'none';
+    titleWrapper.style.display = 'block';
+    if(titleInput){ titleInput.value = zone.title || 'Зона'; titleInput.placeholder = 'Название'; }
+    showAlwaysLabel.style.display = 'flex';
+    popup.dataset.activeTypeId = '__default__';
+  }
+
+  const delBtn = $('zone-popup-delete-btn');
+  if(delBtn) delBtn.style.display = '';
+  positionPopup(popup, sx, sy);
+  popup.style.display = 'block';
+  setTimeout(() => (isDefaultZone ? titleInput : input).focus(), 50);
+}
+
+/* ── Rendering zones ── */
+function _shouldShowZoneCommentAlways(zone){
+  const rawComment = (zone.text || '').trim();
+  if(!rawComment) return false;
+  const pinShowAlways = zone.pin_show_text_always === true;
+  if(zonesShowAlways || pinShowAlways) return true;
+  return false;
+}
+
+function renderZonesForCurrentFrame(){
+  // Удаляем старые зоны с оверлея
+  markersOverlay.querySelectorAll('.zone-rect').forEach(el => el.remove());
+
+  const vm = (typeof viewMode !== 'undefined') ? viewMode : 'original';
+  const frameZones = allZones.filter(z =>
+    z.frame_index === currentFrame && z.view_mode === vm
+  );
+
+  frameZones.forEach((z, i) => {
+    const rect = document.createElement('div');
+    rect.className = 'zone-rect';
+    if(selectedZoneId === z.id) rect.classList.add('selected');
+    rect.style.left = (z.x * 100) + '%';
+    rect.style.top = (z.y * 100) + '%';
+    rect.style.width = (z.w * 100) + '%';
+    rect.style.height = (z.h * 100) + '%';
+    rect.dataset.id = z.id;
+
+    const zColor = getZoneDisplayColor(z);
+    rect.style.borderColor = zColor;
+    rect.style.background = _hexToRgba(zColor, 0.18);
+
+    // Номер
+    const num = document.createElement('span');
+    num.className = 'zone-num';
+    num.textContent = 'З' + (i + 1);
+    rect.appendChild(num);
+
+    // Type/title badge: дефолтная зона — индивидуальное название
+    const hasCustomZoneType = z.type_id && z.type_id !== '__default__';
+    const rawComment = (z.text || '').trim();
+    const zoneLabel = hasCustomZoneType ? (z.type_title || '(тип удалён)') : ((z.title || '').trim() || 'Зона');
+
+    const typeBadge = document.createElement('span');
+    typeBadge.className = 'zone-type-badge';
+    typeBadge.style.background = zColor || 'rgba(0,0,0,.7)';
+    typeBadge.textContent = zoneLabel;
+    rect.appendChild(typeBadge);
+
+    // Comment display
+    if(rawComment && _shouldShowZoneCommentAlways(z)){
+      const badge = document.createElement('span');
+      badge.className = 'zone-badge';
+      badge.textContent = rawComment;
+      rect.appendChild(badge);
+    } else if(rawComment){
+      const tooltip = document.createElement('span');
+      tooltip.className = 'zone-hover-tooltip';
+      tooltip.textContent = rawComment;
+      rect.appendChild(tooltip);
+    }
+
+    // Resize handles
+    ['nw','n','ne','e','se','s','sw','w'].forEach(pos => {
+      const handle = document.createElement('div');
+      handle.className = 'zone-resize-handle ' + pos;
+      handle.dataset.dir = pos;
+      rect.appendChild(handle);
+    });
+
+    // Setup interactions
+    _setupZoneDrag(rect, z);
+    _setupZoneResize(rect, z);
+
+    // Right-click: delete (только если не drag/resize)
+    rect.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Запрещаем удаление во время drag и resize
+      if(_zoneDragging || _zoneResizing) return;
+      requestDeleteZone(z.id, e.clientX, e.clientY);
+    });
+
+    markersOverlay.appendChild(rect);
+  });
+}
+
+function _hexToRgba(hex, alpha){
+  if(!hex || hex.startsWith('var(')) return 'rgba(63,185,80,' + alpha + ')';
+  const h = hex.replace('#', '');
+  const r = parseInt(h.substring(0,2),16) || 0;
+  const g = parseInt(h.substring(2,4),16) || 0;
+  const b = parseInt(h.substring(4,6),16) || 0;
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+}
+
+/* ── Zone drag (move) ── */
+function _setupZoneDrag(rect, zone){
+  const DRAG_THRESHOLD = 4;
+  let clickTimer = null;
+  let hasDoubleClick = false;
+  
+  rect.addEventListener('mousedown', e => {
+    // Не перехватываем resize handles
+    if(e.target.classList.contains('zone-resize-handle')) return;
+    if(e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Очищаем предыдущий таймер
+    if(clickTimer) {
+      clearTimeout(clickTimer);
+      clickTimer = null;
+      hasDoubleClick = true;
+    } else {
+      hasDoubleClick = false;
+      clickTimer = setTimeout(() => {
+        clickTimer = null;
+        // Одиночный клик: выделение и открытие редактора зоны (комментарий всегда доступен по клику)
+        if(!hasDoubleClick && !_zoneDragging){
+          selectedZoneId = zone.id;
+          openZoneForEdit(zone, startX, startY);
+          renderZonesForCurrentFrame();
+          updateAnnList();
+        }
+      }, 300); // Задержка для определения двойного клика
+    }
+    
+    const startX = e.clientX;
+    const startY = e.clientY;
+    let moved = false;
+    const imgRect = frameImg.getBoundingClientRect();
+    const startNormX = zone.x;
+    const startNormY = zone.y;
+
+    const onMove = ev => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      if(!moved && Math.abs(dx) + Math.abs(dy) < DRAG_THRESHOLD) return;
+      if(!moved){
+        moved = true;
+        _zoneDragging = true;
+        rect.classList.add('moving');
+        // Отменяем таймер клика при начале drag
+        if(clickTimer){
+          clearTimeout(clickTimer);
+          clickTimer = null;
+        }
+      }
+      const normDx = dx / imgRect.width;
+      const normDy = dy / imgRect.height;
+      let nx = startNormX + normDx;
+      let ny = startNormY + normDy;
+      nx = Math.max(0, Math.min(1 - zone.w, nx));
+      ny = Math.max(0, Math.min(1 - zone.h, ny));
+      rect.style.left = (nx * 100) + '%';
+      rect.style.top = (ny * 100) + '%';
+    };
+
+    const onUp = async ev => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      rect.classList.remove('moving');
+      _zoneDragging = false;
+      if(_cancelZoneDragResize){
+        _cancelZoneDragResize = false;
+        renderZonesForCurrentFrame();
+        return;
+      }
+      
+      // Если был двойной клик и не было перемещения, открываем форму редактирования
+      if(hasDoubleClick && !moved && !zoneMode){
+        hasDoubleClick = false;
+        if(clickTimer) {
+          clearTimeout(clickTimer);
+          clickTimer = null;
+        }
+        selectedZoneId = zone.id;
+        openZoneForEdit(zone, ev.clientX, ev.clientY);
+        renderZonesForCurrentFrame();
+        updateAnnList();
+        return;
+      }
+      
+      if(!moved){
+        // Одиночный клик обрабатывается через таймер выше
+        return;
+      }
+      
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      const normDx = dx / imgRect.width;
+      const normDy = dy / imgRect.height;
+      let nx = Math.max(0, Math.min(1 - zone.w, startNormX + normDx));
+      let ny = Math.max(0, Math.min(1 - zone.h, startNormY + normDy));
+      await _updateZoneGeometry(zone.id, nx, ny, zone.w, zone.h);
+      await loadZones();
+      renderZonesForCurrentFrame();
+      updateAnnList();
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+  
+  // Обработчик двойного клика
+  rect.addEventListener('dblclick', e => {
+    if(e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+    // Отменяем таймер одиночного клика
+    if(clickTimer){
+      clearTimeout(clickTimer);
+      clickTimer = null;
+    }
+    hasDoubleClick = true;
+    // Открываем форму редактирования только если режим добавления зоны выключен
+    if(!zoneMode){
+      selectedZoneId = zone.id;
+      openZoneForEdit(zone, e.clientX, e.clientY);
+      renderZonesForCurrentFrame();
+      updateAnnList();
+    }
+  });
+}
+
+/* ── Zone resize ── */
+function _setupZoneResize(rect, zone){
+  rect.querySelectorAll('.zone-resize-handle').forEach(handle => {
+    handle.addEventListener('mousedown', e => {
+      if(e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      
+      _zoneResizing = true;
+
+      const dir = handle.dataset.dir;
+      const imgRect = frameImg.getBoundingClientRect();
+      let { x, y, w, h } = zone;
+
+      const onMove = ev => {
+        const normX = (ev.clientX - imgRect.left) / imgRect.width;
+        const normY = (ev.clientY - imgRect.top) / imgRect.height;
+        const cx = Math.max(0, Math.min(1, normX));
+        const cy = Math.max(0, Math.min(1, normY));
+
+        let nx = x, ny = y, nw = w, nh = h;
+
+        if(dir.includes('w')){
+          nw = (x + w) - cx;
+          nx = cx;
+          if(nw < 0.01){ nw = 0.01; nx = x + w - 0.01; }
+        }
+        if(dir.includes('e')){
+          nw = cx - x;
+          if(nw < 0.01) nw = 0.01;
+        }
+        if(dir.includes('n')){
+          nh = (y + h) - cy;
+          ny = cy;
+          if(nh < 0.01){ nh = 0.01; ny = y + h - 0.01; }
+        }
+        if(dir.includes('s')){
+          nh = cy - y;
+          if(nh < 0.01) nh = 0.01;
+        }
+
+        rect.style.left = (nx * 100) + '%';
+        rect.style.top = (ny * 100) + '%';
+        rect.style.width = (nw * 100) + '%';
+        rect.style.height = (nh * 100) + '%';
+
+        // Запоминаем промежуточные значения
+        rect._pendingGeo = { x: nx, y: ny, w: nw, h: nh };
+      };
+
+      const onUp = async () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        _zoneResizing = false;
+        if(_cancelZoneDragResize){
+          _cancelZoneDragResize = false;
+          if(rect._pendingGeo) delete rect._pendingGeo;
+          renderZonesForCurrentFrame();
+          return;
+        }
+        if(rect._pendingGeo){
+          const g = rect._pendingGeo;
+          delete rect._pendingGeo;
+          await _updateZoneGeometry(zone.id, g.x, g.y, g.w, g.h);
+          await loadZones();
+          renderZonesForCurrentFrame();
+          updateAnnList();
+        }
+      };
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+}
+
+async function _updateZoneGeometry(zid, x, y, w, h){
+  try{
+    await fetch('/api/projects/'+projectId+'/zones/'+zid, {
+      method:'PUT',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({x, y, w, h})
+    });
+    showToast('Зона перемещена');
+  }catch(e){
+    console.warn('Failed to update zone geometry', e);
+  }
+}
+
+/* ── Единый обработчик Delete: всегда подтверждение удаления для любого выбранного объекта ── */
+document.addEventListener('keydown', e => {
+  if(e.key !== 'Delete') return;
+  const confirmPop = $('marker-confirm-popup');
+  if(confirmPop && confirmPop.style.display !== 'none') return;
+  const tag = (document.activeElement || {}).tagName;
+  if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if(selectedZoneId){
+    e.preventDefault();
+    requestDeleteZone(selectedZoneId);
+    return;
+  }
+  const markerPop = $('marker-popup');
+  const markerPopVisible = markerPop && markerPop.style.display !== 'none';
+  if(selectedCardMarkerId){
+    e.preventDefault();
+    requestDeleteMarker(selectedCardMarkerId);
+    return;
+  }
+  if(editingMarkerId && markerPopVisible){
+    e.preventDefault();
+    requestDeleteMarker(editingMarkerId);
+  }
 });
 
 /* Склонение слова «кадр» для числительного */
@@ -8457,16 +10591,44 @@ async function openProjectFromList(p){
 }
 
 /* ── Горячие клавиши ───────────────────────────────────────── */
+function _isAnyModalOpen(){
+  const mt = $('mt-modal-overlay'), zt = $('zt-modal-overlay');
+  const info = $('project-info-modal'), exp = $('export-modal');
+  const confirmPop = $('marker-confirm-popup');
+  return (mt && mt.classList.contains('open')) ||
+    (zt && zt.classList.contains('open')) ||
+    (info && !info.classList.contains('hidden')) ||
+    (exp && !exp.classList.contains('hidden')) ||
+    (confirmPop && confirmPop.style.display !== 'none');
+}
+
 document.addEventListener('keydown',e=>{
   if(document.activeElement.tagName==='INPUT' || document.activeElement.tagName==='TEXTAREA') return;
+  const active = document.activeElement;
+  if(active && active.isContentEditable) return;
   if(!$('screen-viewer').classList.contains('active')) return;
   switch(e.key){
     case 'ArrowLeft': prevFrame(); e.preventDefault(); break;
     case 'ArrowRight': nextFrame(); e.preventDefault(); break;
     case 'm': case 'M': case 'ь': case 'Ь': toggleMarkerMode(); break;
+    case 'Control':
+      // #region agent log
+      (function(){
+        const inText = typeof isFocusInTextInput==='function'&&isFocusInTextInput();
+        fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'d1520a'},body:JSON.stringify({sessionId:'d1520a',location:'keydown:Control',message:'Ctrl key',data:{repeat:e.repeat,altKey:e.altKey,shiftKey:e.shiftKey,metaKey:e.metaKey,inTextInput:inText,willCallToggle:!e.repeat&&!e.altKey&&!e.shiftKey&&!e.metaKey&&!inText},timestamp:Date.now(),hypothesisId:'H2'})}).catch(()=>{});
+      })();
+      // #endregion
+      if(!e.repeat && !e.altKey && !e.shiftKey && !e.metaKey && !isFocusInTextInput()){
+        e.preventDefault();
+        toggleLastUsedPlacementMode();
+      }
+      break;
     case 'Escape':
       cancelMarkerPopup();
       closeMarkerContextMenu();
+      if(!_isAnyModalOpen()){
+        resetAnnotationMode();
+      }
       break;
   }
 });
@@ -8490,6 +10652,14 @@ document.addEventListener('mousedown', function(e){
     _popupJustClosed = true;
     setTimeout(function(){ _popupJustClosed = false; }, 200);
   }
+
+  // Закрытие попапа зоны при клике вне: только закрываем окно, зона уже создана и остаётся на кадре
+  const zonePopup = $('zone-popup');
+  if(zonePopup && zonePopup.style.display !== 'none' && !zonePopup.contains(e.target)){
+    cancelZonePopup();
+    _popupJustClosed = true;
+    setTimeout(function(){ _popupJustClosed = false; }, 200);
+  }
 });
 // Enter = сохранить, Shift+Enter = перевод строки, Esc = отмена
 // Delete = удалить пометку (если textarea пустая и нет выделения текста в режиме редактирования)
@@ -8500,28 +10670,55 @@ $('marker-comment-input').addEventListener('keydown', function(e){
   }
   if(e.key === 'Escape'){ e.preventDefault(); cancelMarkerPopup(); }
   
-  // Delete: удаление пометки при редактировании, если textarea пустая и нет выделения
+  // Delete в режиме редактирования: всегда показываем подтверждение удаления (как для дефолта, так и для конфигурируемого типа)
   if(e.key === 'Delete'){
     const popup = $('marker-popup');
     const mode = popup ? popup.dataset.mode : null;
-    const input = e.target;
-    
-    // Проверяем, что это режим редактирования и есть активная пометка
     if(mode === 'edit' && editingMarkerId){
-      // Проверяем, есть ли выделенный текст
-      const hasSelection = input.selectionStart !== input.selectionEnd;
-      // Проверяем, есть ли текст в textarea
-      const hasText = input.value.trim().length > 0;
-      
-      // Если нет выделения и нет текста — удаляем пометку
-      if(!hasSelection && !hasText){
-        e.preventDefault();
-        deleteMarkerFromPopup();
-      }
-      // Иначе Delete работает как обычно (удаляет символы)
+      e.preventDefault();
+      deleteMarkerFromPopup();
     }
   }
 });
+
+// Enter = сохранить, Escape = отмена (zone popup)
+if($('zone-comment-input')){
+  $('zone-comment-input').addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      saveZonePopup();
+    }
+    if(e.key === 'Escape'){ e.preventDefault(); cancelZonePopup(); }
+    if(e.key === 'Delete'){
+      const popup = $('zone-popup');
+      const mode = popup ? popup.dataset.mode : null;
+      if(mode === 'edit' && editingZoneId){
+        e.preventDefault();
+        deleteZoneFromPopup();
+      }
+    }
+  });
+}
+if($('zone-popup-title-input')){
+  $('zone-popup-title-input').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); saveZonePopup(); }
+    if(e.key === 'Escape'){ e.preventDefault(); cancelZonePopup(); }
+    if(e.key === 'Delete' && editingZoneId){
+      e.preventDefault();
+      requestDeleteZone(editingZoneId);
+    }
+  });
+}
+if($('marker-popup-title-input')){
+  $('marker-popup-title-input').addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); saveMarkerPopup(); }
+    if(e.key === 'Escape'){ e.preventDefault(); cancelMarkerPopup(); }
+    if(e.key === 'Delete' && editingMarkerId){
+      e.preventDefault();
+      requestDeleteMarker(editingMarkerId);
+    }
+  });
+}
 
 // инициализируем инлайн-редактирование имени проекта в шапке настроек
 initProjectTitleInlineEditing();
@@ -8554,6 +10751,30 @@ let roiDrawing = false;
 let roiStartX = 0, roiStartY = 0;
 // (annotatedCenteredFrames removed — using unified markers system)
 
+/* ── Centering panel сворачивание ─────────────────────────── */
+function _centeringPanelStorageKey(){
+  return projectId ? 'centering_panel_expanded_' + projectId : null;
+}
+function toggleCenteringPanel(){
+  const panel = $('centering-panel');
+  if(!panel) return;
+  const isCollapsed = panel.classList.contains('collapsed');
+  panel.classList.toggle('collapsed', !isCollapsed);
+  const btn = $('centering-panel-toggle-btn');
+  if(btn) btn.textContent = isCollapsed ? 'Свернуть' : 'Развернуть';
+  const key = _centeringPanelStorageKey();
+  if(key) sessionStorage.setItem(key, isCollapsed ? '1' : '0');
+  updateCenteringPanelHeaderState();
+}
+function updateCenteringPanelHeaderState(){
+  const on = $('chk-centering') && $('chk-centering').checked;
+  const el = $('centering-panel-state');
+  if(el){
+    el.textContent = on ? 'вкл' : 'выкл';
+    el.classList.toggle('on', !!on);
+  }
+}
+
 /* ── Centering toggle ─────────────────────────────────────── */
 function onCenteringToggle(){
   const on = $('chk-centering').checked;
@@ -8562,6 +10783,7 @@ function onCenteringToggle(){
   const lblStab = $('lbl-stabilize');
   if(lblStab) lblStab.style.display = on ? '' : 'none';
   updateCenteringButtons();
+  updateCenteringPanelHeaderState();
 }
 
 function updateCenteringButtons(){
@@ -8611,6 +10833,17 @@ async function loadCenteringState(){
   }catch(e){}
 
   updateCenteringButtons();
+  updateCenteringPanelHeaderState();
+
+  // Восстановить свернуто/развернуто из сессии (по умолчанию свернуто)
+  const panel = $('centering-panel');
+  const key = _centeringPanelStorageKey();
+  if(panel && key){
+    const expanded = sessionStorage.getItem(key) === '1';
+    panel.classList.toggle('collapsed', !expanded);
+    const btn = $('centering-panel-toggle-btn');
+    if(btn) btn.textContent = expanded ? 'Свернуть' : 'Развернуть';
+  }
 }
 
 /* ── View mode toggle ─────────────────────────────────────── */
@@ -8624,8 +10857,12 @@ function setViewMode(mode){
   allMarkers.forEach(m => {
     annotatedFrames.add(m.frame_index);
   });
+  allZones.forEach(z => {
+    annotatedFrames.add(z.frame_index);
+  });
   updateTimelineMarkers();
   renderMarkersForCurrentFrame();
+  renderZonesForCurrentFrame();
   updateAnnList();
   loadAnnotationsForCurrentMode();
 }
@@ -8644,6 +10881,7 @@ function showFrameForMode(idx){
   updateActiveThumb();
   scrollTimelineToFrame(idx);
   renderMarkersForCurrentFrame();
+  renderZonesForCurrentFrame();
   updateAnnList();
 }
 
@@ -8651,6 +10889,7 @@ async function loadAnnotationsForCurrentMode(){
   // Маркеры уже загружены и фильтруются по view_mode — просто обновляем UI
   updateAnnList();
   renderMarkersForCurrentFrame();
+  renderZonesForCurrentFrame();
   updateTimelineMarkers();
 }
 
@@ -8833,6 +11072,20 @@ goToFrame = function(idx){
   updateActiveThumb();
   scrollTimelineToFrame(idx);
   applyViewerTransform();
+  // FIX H1: добавляем вызовы рендера маркеров/зон/аннотаций, которые были в оригинальном goToFrame
+  renderMarkersForCurrentFrame();
+  renderZonesForCurrentFrame();
+  // Сбрасываем выделение карточек если кадр сменился
+  if(selectedCardMarkerId){
+    const selMarker = allMarkers.find(m => m.id === selectedCardMarkerId);
+    if(!selMarker || selMarker.frame_index !== idx) selectedCardMarkerId = null;
+  }
+  if(selectedZoneId){
+    const selZone = allZones.find(z => z.id === selectedZoneId);
+    if(!selZone || selZone.frame_index !== idx) selectedZoneId = null;
+  }
+  updateAnnList();
+  _highlightTimelineMarker(idx);
 };
 
 /* (Drawing overrides removed — replaced by point markers system) */
@@ -8884,6 +11137,14 @@ async function applyViewerDefaults(){
   const sensVal = document.getElementById('sens-val');
   if(sensSlider){ sensSlider.max = String(maxSensitivity); sensSlider.value = String(defSens); }
   if(sensVal) sensVal.textContent = String(defSens);
+  // Единый источник истины: после установки ползунка синхронизировать переменную с DOM
+  syncViewerSensitivityFromSlider();
+  // #region agent log
+  (function(){
+    const sl = document.getElementById('sens-slider');
+    fetch('http://127.0.0.1:7248/ingest/bd1e57c9-7104-4778-b168-b37957bd0f1a',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'f1e6e9'},body:JSON.stringify({sessionId:'f1e6e9',location:'applyViewerDefaults',message:'sensitivity after init',data:{defSens,sensitivity,sliderValue:sl?sl.value:null,maxSensitivity},timestamp:Date.now(),hypothesisId:'H1'})}).catch(()=>{});
+  })();
+  // #endregion
 
   // Infinite rotation
   const vw = _appSettings && _appSettings.viewer ? _appSettings.viewer : {};
@@ -8910,6 +11171,18 @@ initViewer = async function(){
   buildTimeline();
   await loadMarkers();
   await loadMarkerTypes();
+  // FIX H2: загружаем зоны и типы зон (отсутствовали в override)
+  await loadZones();
+  await loadZoneTypes();
+  // After regeneration markers/zones are empty — reset chip selection and selection state so UI is in base state
+  if(allMarkers.length === 0 && allZones.length === 0){
+    activeMarkerTypeId = '__default__';
+    activeZoneTypeId = null;
+    selectedCardMarkerId = null;
+    selectedZoneId = null;
+    renderMarkerTypeChips();
+    renderZoneTypeChips();
+  }
   await loadCenteringState();
 
   // Apply viewer defaults from app settings before showing the screen
